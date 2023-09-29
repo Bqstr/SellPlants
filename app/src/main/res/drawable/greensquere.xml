@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Define the shape as a rectangle (square) -->
+    <solid android:color="#9EFF57" /> <!-- Green color (in hexadecimal) -->
+
+    <!-- You can also specify the size of the square using the size tag -->
+    <size
+        android:width="100dp"
+    android:height="100dp" />
+</shape>
