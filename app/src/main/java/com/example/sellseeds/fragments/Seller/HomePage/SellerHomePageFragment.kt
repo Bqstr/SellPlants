@@ -9,16 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.clearFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sellseeds.OrdersAdapter
+import com.example.sellseeds.adapters.OrdersAdapter
 
 import com.example.sellseeds.R
-import com.example.sellseeds.SeedsAdapter
+import com.example.sellseeds.adapters.SeedsAdapter
 import com.example.sellseeds.dataClass_enum.Category
 import com.example.sellseeds.dataClass_enum.Discount
 import com.example.sellseeds.dataClass_enum.OrderStatus
@@ -40,8 +37,8 @@ lateinit var binding:ActivitySellerHomepageOneBinding
 
 val viewModel by viewModels<SellerHomePageViewModel>()
 var isProductPressed =true
-    lateinit var productAdapter:SeedsAdapter
-    lateinit var orderAdapter:OrdersAdapter
+    lateinit var productAdapter: SeedsAdapter
+    lateinit var orderAdapter: OrdersAdapter
 init {
     //intialize all data from database
 
@@ -56,9 +53,9 @@ init {
         binding =ActivitySellerHomepageOneBinding.inflate(layoutInflater)
 
 
-        productAdapter =SeedsAdapter(findNavController(), context, layoutInflater)
+        productAdapter = SeedsAdapter(findNavController(), context, layoutInflater)
 
-         orderAdapter =OrdersAdapter(findNavController(),context, false)
+         orderAdapter = OrdersAdapter(findNavController(),context, false)
 
 
 
@@ -113,7 +110,7 @@ init {
 
         binding.myaccountBtn.setOnClickListener{
             val arg =Bundle()
-            arg.putSerializable(GO_SELLER_EDITPROFILE , createSellerData())
+           // arg.putSerializable(GO_SELLER_EDITPROFILE , createSellerData())
            // arg.putSerializable("12323")  Pass Seller Infomration
 
 
@@ -216,148 +213,148 @@ init {
 
 
 
-
-    private fun createSellerData(): Shop {
-        return (Shop(
-            0,
-            "Hydra",
-            "3_head_gydra@gmai.com",
-            "jail",
-            "+666",
-            createData(),
-            createOrderData(),
-            R.drawable.img_rectangle19,
-            Rating.FIVE_STAR,
-            100,"123"
-        ))
-    }
-
-
-     fun createData(): MutableList<Seed> {
-        val mutableList = mutableListOf<Seed>(
-            Seed(
-                0,
-                "Olive Tree",
-                "description",
-                1000,
-                listOf(R.drawable.img_rectangle12),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                1,
-                "Money Tree",
-                "description",
-                2000,
-                listOf(R.drawable.img_rectangle12_1),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                2,
-                "Faux Palm Tree",
-                "description",
-                3000,
-                listOf(R.drawable.img_rectangle12_108x110),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                3,
-                "Kek Tree",
-                "description",
-                999,
-                listOf(R.drawable.img_rectangle12_2),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                0,
-                "Olive Tree",
-                "description",
-                1000,
-                listOf(R.drawable.img_rectangle12),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                2,
-                "Faux Palm Tree",
-                "description",
-                3000,
-                listOf(R.drawable.img_rectangle12_108x110),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-
-
-            )
-        return mutableList
-
-    }
-
-    fun createOrderData(): MutableList<Orders> {
-        val examplePlant = Seed(
-            0,
-            "Olive Tree",
-            "description",
-            1000,
-            listOf(R.drawable.img_rectangle12),
-            Category.SmallPlant,
-            1,
-            Discount(true, 0.2)
-        )
-        val exampleShop = Shop(0,"1","123","123","123",createData() , mutableListOf(),R.drawable.img_rectangle19 , Rating.FOUR_STAR ,100,"123")
-        val exampleUser =
-            User(0, "USER_NAME", "email_user@gmail.com", "USER_ADRESS", "+777777777777777", mutableListOf<Orders>(),"123")
-
-        var mut = mutableListOf(
-            Orders(
-                123,
-                1000,
-                examplePlant,
-                10,
-                adress = "ADRESS",
-                shop = exampleShop,
-                buyer = exampleUser,
-                date = 12312,
-                status = OrderStatus.InProgress
-            ),
-            Orders(
-                124,
-                2000,
-                examplePlant,
-                20,
-                adress = "ADRESS",
-                shop = exampleShop,
-                buyer = exampleUser,
-                date = 12312123,
-                status = OrderStatus.Completed
-            ),
-
-            Orders(
-                125,
-                6000,
-                examplePlant,
-                10,
-                adress = "ADRESS",
-                shop = exampleShop,
-                buyer = exampleUser,
-                date = 12312,
-                status = OrderStatus.Canceled
-            )
-        )
-
-        return mut
-    }
-
-
+//
+//    private fun createSellerData(): Shop {
+//        return (Shop(
+//            0,
+//            "Hydra",
+//            "3_head_gydra@gmai.com",
+//            "jail",
+//            "+666",
+//            createData(),
+//            createOrderData(),
+//            R.drawable.img_rectangle19,
+//            Rating.FIVE_STAR,
+//            100,"123"
+//        ))
+//    }
+//
+//
+//     fun createData(): MutableList<Seed> {
+//        val mutableList = mutableListOf<Seed>(
+//            Seed(
+//                0,
+//                "Olive Tree",
+//                "description",
+//                1000,
+//                R.drawable.img_rectangle12,
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                1,
+//                "Money Tree",
+//                "description",
+//                2000,
+//                listOf(R.drawable.img_rectangle12_1),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                2,
+//                "Faux Palm Tree",
+//                "description",
+//                3000,
+//                listOf(R.drawable.img_rectangle12_108x110),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                3,
+//                "Kek Tree",
+//                "description",
+//                999,
+//                listOf(R.drawable.img_rectangle12_2),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                0,
+//                "Olive Tree",
+//                "description",
+//                1000,
+//                listOf(R.drawable.img_rectangle12),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                2,
+//                "Faux Palm Tree",
+//                "description",
+//                3000,
+//                listOf(R.drawable.img_rectangle12_108x110),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//
+//
+//            )
+//        return mutableList
+//
+//    }
+//
+//    fun createOrderData(): MutableList<Orders> {
+//        val examplePlant = Seed(
+//            0,
+//            "Olive Tree",
+//            "description",
+//            1000,
+//            listOf(R.drawable.img_rectangle12),
+//            Category.SmallPlant,
+//            1,
+//            Discount(true, 0.2)
+//        )
+//        val exampleShop = Shop(0,"1","123","123","123",createData() , mutableListOf(),R.drawable.img_rectangle19 , Rating.FOUR_STAR ,100,"123")
+//        val exampleUser =
+//            User(0, "USER_NAME", "email_user@gmail.com", "USER_ADRESS", "+777777777777777", mutableListOf<Orders>(),"123")
+//
+//        var mut = mutableListOf(
+//            Orders(
+//                123,
+//                1000,
+//                examplePlant,
+//                10,
+//                adress = "ADRESS",
+//                shop = exampleShop,
+//                buyer = exampleUser,
+//                date = 12312,
+//                status = OrderStatus.InProgress
+//            ),
+//            Orders(
+//                124,
+//                2000,
+//                examplePlant,
+//                20,
+//                adress = "ADRESS",
+//                shop = exampleShop,
+//                buyer = exampleUser,
+//                date = 12312123,
+//                status = OrderStatus.Completed
+//            ),
+//
+//            Orders(
+//                125,
+//                6000,
+//                examplePlant,
+//                10,
+//                adress = "ADRESS",
+//                shop = exampleShop,
+//                buyer = exampleUser,
+//                date = 12312,
+//                status = OrderStatus.Canceled
+//            )
+//        )
+//
+//        return mut
+//    }
+//
+//
 
     }
 

@@ -1,11 +1,10 @@
 package com.example.sellseeds.model.user
 
+import android.util.Log
 import com.example.sellseeds.dataClass_enum.User
-import com.example.sellseeds.fragments.Buyer.registerUser.UserCurrentId
-import com.example.sellseeds.model.UserDao
 import com.example.sellseeds.model.user.entities.UserDbEntity
 
-class RoomUserRepository(val dao: UserDao, val userCurrentId:UserCurrentId) : UserRepository {
+class RoomUserRepository(val dao: UserDao, val userCurrentId: UserCurrentId) : UserRepository {
 
 //    private val currentAccountIdFlow = AsyncLoader {
 //        MutableStateFlow(UserID(appSettings.getCurrentAccountId()))
@@ -24,8 +23,13 @@ class RoomUserRepository(val dao: UserDao, val userCurrentId:UserCurrentId) : Us
 
     override suspend fun signIn(email: String, password: String):Boolean {
         val us = dao.findByEmail(email) ?: return false
+        Log.d("dhhdhdhdhd","abobus")
+        Log.d("dhhdhdhdhd","${password}   ${us.password}    ${us.id}   ${us.email}  ${us.adress}")
+
         if(us.password==password){
+            Log.d("asasasasasas",us.id.toString())
             userCurrentId.setCurrentUserId(us.id)
+            Log.d("asasasasasas", userCurrentId.getCurrentUserId().toString())
             return true
 
         }
@@ -47,5 +51,18 @@ class RoomUserRepository(val dao: UserDao, val userCurrentId:UserCurrentId) : Us
 
 
         }
+
+    override suspend fun getUserById(id: Int): User {
+        val us =dao.getUserById(id)
+        if(us==null){
+            return dao.getUserById(id)!!.toUser()
+
+        }
+        else{
+            return dao.getUserById(id)!!.toUser()
+        }
+
+    }
+
     class UserID(val value:Int)
 }

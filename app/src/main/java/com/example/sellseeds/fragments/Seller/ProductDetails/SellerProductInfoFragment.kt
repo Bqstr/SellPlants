@@ -38,7 +38,7 @@ class SellerProductInfoFragment : Fragment() {
         val plant =arguments?.getSerializable("12321321") as Seed
 
         binding.textView3.text =plant.name
-        binding.abobus.setImageResource(plant.images[0])
+        binding.abobus.setImageResource(plant.images)
 
         // Inflate the layout for this fragment
         return binding.root

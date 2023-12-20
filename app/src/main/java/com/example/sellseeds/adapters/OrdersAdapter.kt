@@ -1,4 +1,4 @@
-package com.example.sellseeds
+package com.example.sellseeds.adapters
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sellseeds.R
 import com.example.sellseeds.dataClass_enum.OrderStatus
 import com.example.sellseeds.dataClass_enum.Orders
 import com.example.sellseeds.databinding.OrderItemBinding
@@ -32,9 +33,15 @@ class OrdersAdapter (val navConteoller: NavController, val context: Context?, va
                 txtPrice.text =order.price.toString()
                  //learn enum in database
                 when(order.status){
-                    OrderStatus.Completed ->{txtCompleted.setTextColor(ContextCompat.getColor(context!!, R.color.greeeen))}
-                    OrderStatus.Canceled ->{txtCompleted.setTextColor(ContextCompat.getColor(context!!, R.color.red))}
-                    OrderStatus.InProgress->{txtCompleted.setTextColor(ContextCompat.getColor(context!!, R.color.grey))}
+                    OrderStatus.Completed ->{txtCompleted.setTextColor(ContextCompat.getColor(context!!,
+                        R.color.greeeen
+                    ))}
+                    OrderStatus.Canceled ->{txtCompleted.setTextColor(ContextCompat.getColor(context!!,
+                        R.color.red
+                    ))}
+                    OrderStatus.InProgress->{txtCompleted.setTextColor(ContextCompat.getColor(context!!,
+                        R.color.grey
+                    ))}
 
                 }
                 txtCompleted.text =order.status.name
@@ -66,7 +73,7 @@ class OrdersAdapter (val navConteoller: NavController, val context: Context?, va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding =OrderItemBinding.inflate(inflater,parent,false)
-        return OrdersAdapter.OrderViewHolder(binding)
+        return OrderViewHolder(binding)
     }
 
 

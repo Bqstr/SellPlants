@@ -40,13 +40,13 @@ class BuyerShopDetailsAdapter(
 
             txtFlowerplantOne.text =Converter.CategorytoString(plant.category)//category
             txtPriceThree.text =plant.price.toString()//price
-            imageRectangleTwelveOne.setImageResource(plant.images[0])   //image
+            imageRectangleTwelveOne.setImageResource(plant.images)   //image
 
             if(plant.discount.haveDiscount){
                 txtOffer.visibility = View.VISIBLE
                 txtNewPrice.visibility =View.VISIBLE
 
-                txtOffer.text ="${(plant.discount.amoutOfPrice *100).toString()}%"
+                txtOffer.text ="${(plant.discount.amoutOfPrice?.times(100)).toString()}%"
                 txtNewPrice.text =txtPriceThree.text
                 txtNewPrice.setPaintFlags(txtPriceThree.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
                 var i :Int=(txtNewPrice.text.toString().toInt()*plant.discount.amoutOfPrice.toString().toDouble()).toInt()
@@ -65,7 +65,7 @@ class BuyerShopDetailsAdapter(
 
             val layut =binding.root
 
-            binding.imageRectangleTwelveFour.setImageResource(plant.images[0])
+            binding.imageRectangleTwelveFour.setImageResource(plant.images)
             binding.txtMonsteraplantsFour.text =plant.name
             binding.txtLanguage.text =plant.name
             binding.txtPriceEight.text =holder.binding.txtPriceThree.text

@@ -32,10 +32,7 @@ lateinit var binding:ActivityLoginBinding
         savedInstanceState: Bundle?
     ): View? {
         binding =ActivityLoginBinding.inflate(layoutInflater)
-        viewModel.navigateToMain.observe(viewLifecycleOwner ,{
-            Log.d("123123123nnnn123123123","Created")
 
-        })
         viewModel.userData.observe(viewLifecycleOwner) {
             Log.d("abibbb",it.toString())
             Log.d("abibbb",it.size.toString())
@@ -68,6 +65,7 @@ lateinit var binding:ActivityLoginBinding
 
 
         viewModel.navigateToMain.observe(viewLifecycleOwner){
+            Log.d("dhhdhdhdhd","in observer")
             if(it){
                 findNavController().navigate(R.id.action_signInFragment_to_buyer_HomePageFragment)
 
@@ -80,8 +78,15 @@ lateinit var binding:ActivityLoginBinding
         }
 
         binding.logInApp.setOnClickListener{
-            val email =binding.emailLogIn.text
-            val password =binding.passwordLogIn.text
+            val email =binding.emailLogIn.text.toString()
+            val password =binding.passwordLogIn.text.toString()
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.signInUser(email ,password)
+                viewModel.signInShop(email,password)
+
+            }
+
 
             //TO-DO  check for in database
 
@@ -89,19 +94,19 @@ lateinit var binding:ActivityLoginBinding
             val isSeller =false
 
 
-            if(isInDatabse==true ){
-               // (requireActivity() as MainActivity).binding.bottomNavigationView.visibility=View.VISIBLE
-
-                if(isSeller==true){
-
-                    findNavController().navigate(R.id.action_signInFragment_to_sellerHomePageFragment)
-
-                }
-                else{
-                    findNavController().navigate(R.id.action_signInFragment_to_buyer_HomePageFragment)
-
-                }
-            }
+//            if(isInDatabse==true ){
+//               // (requireActivity() as MainActivity).binding.bottomNavigationView.visibility=View.VISIBLE
+//
+//                if(isSeller==true){
+//
+//                    findNavController().navigate(R.id.action_signInFragment_to_sellerHomePageFragment)
+//
+//                }
+//                else{
+//                    findNavController().navigate(R.id.action_signInFragment_to_buyer_HomePageFragment)
+//
+//                }
+//            }
 
 
 

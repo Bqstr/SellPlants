@@ -23,6 +23,6 @@ interface ShopDao {
     fun getById(id:Int): ShopDbEntity?
 
     @Query("Select * from shop ")
-    fun getAll(): List<ShopDbEntity?>
+    fun getAll(): List<ShopDbEntity?>?
 
 }

@@ -22,16 +22,7 @@ import com.example.sellseeds.fragments.Seller.HomePage.SellerHomePageFragment
  * create an instance of this fragment.
  */
 class BuyerShopFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 lateinit var binding:ActivityShopBinding
 lateinit var adapter: BuyerShopDetailsAdapter
     override fun onCreateView(
@@ -43,7 +34,7 @@ lateinit var adapter: BuyerShopDetailsAdapter
         val layoutManager =LinearLayoutManager(context)
         binding.recyclerrr.adapter =adapter
         binding.recyclerrr.layoutManager =layoutManager
-        adapter.plants =createData()
+        //adapter.plants =createData()
         binding.btnGroupTwelve.setOnClickListener{
             //sort by name up/down   , sort by date  up/down
             //when pressed change it's will sort by those and write by Toast Messages about it
@@ -53,74 +44,74 @@ lateinit var adapter: BuyerShopDetailsAdapter
             return binding.root
     }
 
-
-    private fun createData(): MutableList<Seed> {
-        val mutableList = mutableListOf<Seed>(
-            Seed(
-                0,
-                "Olive Tree",
-                "description",
-                1000,
-                listOf(R.drawable.img_rectangle12),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                1,
-                "Money Tree",
-                "description",
-                2000,
-                listOf(R.drawable.img_rectangle12_1),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                2,
-                "Faux Palm Tree",
-                "description",
-                3000,
-                listOf(R.drawable.img_rectangle12_108x110),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                3,
-                "Kek Tree",
-                "description",
-                999,
-                listOf(R.drawable.img_rectangle12_2),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                0,
-                "Olive Tree",
-                "description",
-                1000,
-                listOf(R.drawable.img_rectangle12),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                2,
-                "Faux Palm Tree",
-                "description",
-                3000,
-                listOf(R.drawable.img_rectangle12_108x110),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-
-
-            )
-        return mutableList
-
-    }
+//
+//    private fun createData(): MutableList<Seed> {
+//        val mutableList = mutableListOf<Seed>(
+//            Seed(
+//                0,
+//                "Olive Tree",
+//                "description",
+//                1000,
+//                listOf(R.drawable.img_rectangle12),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                1,
+//                "Money Tree",
+//                "description",
+//                2000,
+//                listOf(R.drawable.img_rectangle12_1),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                2,
+//                "Faux Palm Tree",
+//                "description",
+//                3000,
+//                listOf(R.drawable.img_rectangle12_108x110),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                3,
+//                "Kek Tree",
+//                "description",
+//                999,
+//                listOf(R.drawable.img_rectangle12_2),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                0,
+//                "Olive Tree",
+//                "description",
+//                1000,
+//                listOf(R.drawable.img_rectangle12),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                2,
+//                "Faux Palm Tree",
+//                "description",
+//                3000,
+//                listOf(R.drawable.img_rectangle12_108x110),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//
+//
+//            )
+//        return mutableList
+//
+//    }
 
 }

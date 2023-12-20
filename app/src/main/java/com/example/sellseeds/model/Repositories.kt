@@ -2,8 +2,8 @@ package com.example.sellseeds.model
 
 import android.content.Context
 import androidx.room.Room
-import com.example.sellseeds.fragments.Buyer.registerUser.UserCurrentId
-import com.example.sellseeds.fragments.Buyer.registerUser.UserCurrentIdRealization
+import com.example.sellseeds.model.user.UserCurrentId
+import com.example.sellseeds.model.user.UserCurrentIdRealization
 import com.example.sellseeds.model.shop.ShopCurrentId
 import com.example.sellseeds.model.shop.ShopRepository
 import com.example.sellseeds.model.shop.ShopRepositoryRealization
@@ -23,7 +23,7 @@ object Repositories {
             .build()
     }
 
-    val userCurrentId:UserCurrentId by lazy{
+    val userCurrentId: UserCurrentId by lazy{
         UserCurrentIdRealization(applicationContext)
     }
     val shopCurrentId:ShopCurrentId by lazy{

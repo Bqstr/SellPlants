@@ -45,7 +45,15 @@ lateinit var binding:ActivityRegisterSellerBinding
         }
         binding.toleBar.imageArrowleft.setOnClickListener{
             //TO DO go back
-            findNavController().popBackStack()
+            lifecycleScope.launch(Dispatchers.IO) {
+
+               val t= viewModel.getAll()
+                for(a in 0 until t.size){
+                    Log.d("1111212121222","${t[a].id}  ${t[a].email}   ${t[a].password}")
+
+                }
+            }
+            //findNavController().popBackStack()
         }
 
         val shopImages = mutableListOf<Int>()

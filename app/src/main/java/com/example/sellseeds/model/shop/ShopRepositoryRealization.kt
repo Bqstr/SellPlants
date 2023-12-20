@@ -1,9 +1,7 @@
 package com.example.sellseeds.model.shop
 
+import android.util.Log
 import com.example.sellseeds.dataClass_enum.Shop
-import com.example.sellseeds.dataClass_enum.User
-import com.example.sellseeds.fragments.Buyer.registerUser.UserCurrentId
-import com.example.sellseeds.model.UserDao
 import com.example.sellseeds.model.shop.entities.ShopDbEntity
 import com.example.sellseeds.model.shop.entities.ShopDbEntity.Companion.toShop
 
@@ -18,6 +16,7 @@ class ShopRepositoryRealization(val dao: ShopDao , val shopCurrentId:ShopCurrent
         val shop =dao.getByEmail(email) ?: return false
 
             if(shop.password ==password){
+
 
                 shopCurrentId.setCurrentId(shop.id)
 
@@ -50,7 +49,15 @@ class ShopRepositoryRealization(val dao: ShopDao , val shopCurrentId:ShopCurrent
     }
 
     override suspend fun getAllShops(): List<Shop> {
-        return dao.getAll().map { shopDbEntity -> shopDbEntity!!.toShop() }
+        if(dao.getAll()==null){
+            return listOf()
+        }
+        val l =dao.getAll()!!
+        for(a in 0 until l.size){
+            Log.d("asdasdasdasd11","${l[a]!!.id}   ${l[a]!!.name}   ${l[a]!!.password}")
+
+        }
+        return dao.getAll()!!.map { shopDbEntity -> shopDbEntity!!.toShop() }
     }
 
 }

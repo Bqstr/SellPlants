@@ -1,4 +1,4 @@
-package com.example.sellseeds.fragments.Buyer.registerUser
+package com.example.sellseeds.model.user
 
 interface UserCurrentId {
     suspend fun getCurrentUserId(): Int

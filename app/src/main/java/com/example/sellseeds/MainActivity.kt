@@ -84,13 +84,13 @@ window.decorView.setBackgroundColor(   getResources().getColor(R.color.white))
 
     fun toListPage() {
         
-        val fragment = ListFragment.newInstance("123","123")
-        supportFragmentManager
-            .beginTransaction()
-
-            .replace(R.id.fragment_conteiner, fragment)
-            .addToBackStack(null)
-            .commit()
+//        val fragment = ListFragment.newInstance("123","123")
+//        supportFragmentManager
+//            .beginTransaction()
+//
+//            .replace(R.id.fragment_conteiner, fragment)
+//            .addToBackStack(null)
+//            .commit()
     }
 
 

@@ -9,6 +9,10 @@ interface UserRepository {
     suspend fun signIn(email:String, password:String):Boolean
     suspend fun getUser(): List<User>?
 
+    suspend fun getUserById(id:Int):User
+
+
+
 
 
 }

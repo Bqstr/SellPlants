@@ -91,7 +91,7 @@ lateinit var binding:ActivityAddproductBinding
 
 
             val product = Seed(10, title,descr, category =  category, quantity = count, price =price, discount =  discount,
-                images = listOf(R.drawable.faux_palm_tree))
+                images = R.drawable.faux_palm_tree , shop_id = 0)
 
 
             var arg =Bundle()

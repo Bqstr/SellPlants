@@ -77,7 +77,7 @@ class RegisterUserFragment : Fragment() {
             var number =binding.etGroupTwelve.text.toString()
             var adress =binding.etGroupThirteen.text.toString()
             var email =binding.etGroupFive.text.toString()
-            var password =binding.etGroupFive.text.toString()
+            var password =binding.etGroupTen.text.toString()
 
             if(name.isNotBlank() && number.isNotBlank() && adress.isNotBlank() && email.isNotBlank() && password.isNotBlank()){
                 var user = User(0,//Will be auto generated

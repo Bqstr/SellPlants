@@ -1,14 +1,10 @@
-package com.example.sellseeds
+package com.example.sellseeds.adapters
 
-import android.R
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sellseeds.dataClass_enum.Seed
@@ -82,7 +78,7 @@ class SeedsAdapter(val navConteoller: NavController, val context: Context?  ,var
             }
             with(holder.binding) {
 
-                imageRectangleTwelveTwo.setImageResource(plant.images[0])
+                imageRectangleTwelveTwo.setImageResource(plant.images)
                 plantName.text =plant.name
                 plantPrice.text =plant.price.toString()
                 plantCount.text =plant.quantity.toString()

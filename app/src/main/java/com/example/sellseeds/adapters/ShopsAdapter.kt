@@ -1,12 +1,12 @@
-package com.example.sellseeds
+package com.example.sellseeds.adapters
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sellseeds.R
 import com.example.sellseeds.dataClass_enum.Converter
 import com.example.sellseeds.dataClass_enum.Shop
 

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sellseeds.dataClass_enum.User
-import com.example.sellseeds.fragments.Buyer.registerUser.UserCurrentId
+import com.example.sellseeds.model.user.UserCurrentId
 import com.example.sellseeds.model.shop.ShopRepository
 import com.example.sellseeds.model.user.entities.UserDbEntity
 import com.example.sellseeds.model.user.UserRepository
@@ -52,7 +52,13 @@ val navigateToMain = MutableLiveData<Boolean>()
 
     suspend fun signInUser(email:String, password:String){
         if(userRepository.signIn(email ,password)  ){
+
             navigateToMain.postValue(true)
+
+        }
+        else{
+            Log.d("dhhdhdhdhd","wrong")
+
         }
 
     }

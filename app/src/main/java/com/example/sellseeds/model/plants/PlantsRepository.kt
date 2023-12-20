@@ -1,13 +1,22 @@
 package com.example.sellseeds.model.plants
 
-import com.example.sellseeds.model.plants.entenies.Plant
-import kotlinx.coroutines.flow.MutableStateFlow
+
+import com.example.sellseeds.dataClass_enum.Seed
+import com.example.sellseeds.dataClass_enum.Shop
+import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 
 interface PlantsRepository {
 
-    fun addPlant(plant:Plant)
+    fun getShops():List<Shop>
 
-    fun deletePlant(plant:Plant)
+    fun addPlant(plant:Seed)
 
-    fun getAllPLants(){}
+ //   fun deletePlant(plant:Plant)
+
+
+    fun getAllPlants():List<Seed?>?
+
+    fun getPlantById(id:Int): Seed?
+
+    fun getPlantsByShopId(shop_id:Int):List<PlantDbEntity?>?
 }

@@ -5,16 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sellseeds.OrdersAdapter
+import com.example.sellseeds.adapters.OrdersAdapter
 import com.example.sellseeds.R
-import com.example.sellseeds.SeedsAdapter
-import com.example.sellseeds.ShopsAdapter
+import com.example.sellseeds.adapters.ShopsAdapter
 import com.example.sellseeds.dataClass_enum.Category
 import com.example.sellseeds.dataClass_enum.Discount
 import com.example.sellseeds.dataClass_enum.OrderStatus
@@ -32,11 +29,11 @@ import kotlinx.coroutines.launch
 
 
 class Buyer_HomePageFragment : Fragment() {
-    lateinit var shopAdapter:ShopsAdapter
+    lateinit var shopAdapter: ShopsAdapter
     lateinit var ordersAdapter: OrdersAdapter
     lateinit var binding: ActivityBuyerHomepageBinding
     var isShopsSelected:Boolean =true
-    val viewModel by viewModelCreator{BuyerHomePageViewModel(Repositories.accountsRepository, Repositories.userCurrentId)  }
+    val viewModel by viewModelCreator{BuyerHomePageViewModel(Repositories.shopRepository, Repositories.accountsRepository, Repositories.userCurrentId)  }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,17 +47,30 @@ class Buyer_HomePageFragment : Fragment() {
         binding.abobus.adapter =shopAdapter
         binding.abobus.layoutManager =layoutManager
 
-        shopAdapter.shops = mutableListOf(createSellerData())
-        ordersAdapter.orders =createOrderData()
+        //shopAdapter.shops = mutableListOf(createSellerData())
+        //ordersAdapter.orders =createOrderData()
         shopsPressed()
+        lifecycleScope.launch(Dispatchers.IO) {
+            //viewModel.getUsers()
+            viewModel.getAllShops()
+            viewModel.getCurrentUser()
+        }
+
+        viewModel.currentUser.observe(viewLifecycleOwner){
+            binding.txtRavijaganiOne.text= it.name
+            binding.txtEmailOne.text= it.email
+
+        }
+
 
         binding.imageVectorFour.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
 
           viewModel.userId.postValue(viewModel.getCurrentId())
+            //viewModel.getUsers()
+        }
+        }
 
-        }
-        }
 
 
 
@@ -84,9 +94,18 @@ class Buyer_HomePageFragment : Fragment() {
             }
         }
     viewModel.userId.observe(viewLifecycleOwner){
-        Toast.makeText(context , "$it <-  eto" , Toast.LENGTH_LONG).show()
+
+        //viewModel.userCurrentId.getCurrentUserId()
+        Log.d("asasasasasas", it.toString())
+
+        //Toast.makeText(context , "$it <-  eto" , Toast.LENGTH_LONG).show()
 
     }
+        viewModel.userList.observe(viewLifecycleOwner){
+            for(a in 0 until it.size){
+                Log.d("aaaaaaaaaaaaaaaaaaa","${it[a].id}   ${it[a].email}  ${it[a].password}")
+            }
+        }
 
 
 
@@ -123,145 +142,145 @@ class Buyer_HomePageFragment : Fragment() {
 
 
     }
-    private fun createSellerData(): Shop {
-        return (Shop(
-            0,
-            "Hydra",
-            "3_head_gydra@gmai.com",
-            "jail",
-            "+666",
-            createData(),
-            createOrderData(),
-            R.drawable.img_rectangle19,
-            Rating.FIVE_STAR,
-            100,"13"
-        ))
-    }
+//    private fun createSellerData(): Shop {
+//        return (Shop(
+//            0,
+//            "Hydra",
+//            "3_head_gydra@gmai.com",
+//            "jail",
+//            "+666",
+//            createData(),
+//            createOrderData(),
+//            R.drawable.img_rectangle19,
+//            Rating.FIVE_STAR,
+//            100,"13"
+//        ))
+//    }
 
-
-    private fun createData(): MutableList<Seed> {
-        val mutableList = mutableListOf<Seed>(
-            Seed(
-                0,
-                "Olive Tree",
-                "description",
-                1000,
-                listOf(R.drawable.img_rectangle12),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                1,
-                "Money Tree",
-                "description",
-                2000,
-                listOf(R.drawable.img_rectangle12_1),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                2,
-                "Faux Palm Tree",
-                "description",
-                3000,
-                listOf(R.drawable.img_rectangle12_108x110),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                3,
-                "Kek Tree",
-                "description",
-                999,
-                listOf(R.drawable.img_rectangle12_2),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                0,
-                "Olive Tree",
-                "description",
-                1000,
-                listOf(R.drawable.img_rectangle12),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-            Seed(
-                2,
-                "Faux Palm Tree",
-                "description",
-                3000,
-                listOf(R.drawable.img_rectangle12_108x110),
-                Category.SmallPlant,
-                1,
-                Discount(true, 0.2)
-            ),
-
-
-            )
-        return mutableList
-
-    }
-
-    fun createOrderData(): MutableList<Orders> {
-        val examplePlant = Seed(
-            0,
-            "Olive Tree",
-            "description",
-            1000,
-            listOf(R.drawable.img_rectangle12),
-            Category.SmallPlant,
-            1,
-            Discount(true, 0.2)
-        )
-        val exampleShop = Shop(0,"1","123","123","123",createData() , mutableListOf(),R.drawable.img_rectangle19 , Rating.FOUR_STAR ,100,"123")
-        val exampleUser =
-            User(0, "USER_NAME", "email_user@gmail.com", "USER_ADRESS", "+777777777777777", mutableListOf<Orders>(),"123")
-
-        var mut = mutableListOf(
-            Orders(
-                123,
-                1000,
-                examplePlant,
-                10,
-                adress = "ADRESS",
-                shop = exampleShop,
-                buyer = exampleUser,
-                date = 12312,
-                status = OrderStatus.InProgress
-            ),
-            Orders(
-                124,
-                2000,
-                examplePlant,
-                20,
-                adress = "ADRESS",
-                shop = exampleShop,
-                buyer = exampleUser,
-                date = 12312123,
-                status = OrderStatus.Completed
-            ),
-
-            Orders(
-                125,
-                6000,
-                examplePlant,
-                10,
-                adress = "ADRESS",
-                shop = exampleShop,
-                buyer = exampleUser,
-                date = 12312,
-                status = OrderStatus.Canceled
-            )
-        )
-
-        return mut
-    }
+//
+//    private fun createData(): MutableList<Seed> {
+//        val mutableList = mutableListOf<Seed>(
+//            Seed(
+//                0,
+//                "Olive Tree",
+//                "description",
+//                1000,
+//                listOf(R.drawable.img_rectangle12),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                1,
+//                "Money Tree",
+//                "description",
+//                2000,
+//                listOf(R.drawable.img_rectangle12_1),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                2,
+//                "Faux Palm Tree",
+//                "description",
+//                3000,
+//                listOf(R.drawable.img_rectangle12_108x110),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                3,
+//                "Kek Tree",
+//                "description",
+//                999,
+//                listOf(R.drawable.img_rectangle12_2),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                0,
+//                "Olive Tree",
+//                "description",
+//                1000,
+//                listOf(R.drawable.img_rectangle12),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//            Seed(
+//                2,
+//                "Faux Palm Tree",
+//                "description",
+//                3000,
+//                listOf(R.drawable.img_rectangle12_108x110),
+//                Category.SmallPlant,
+//                1,
+//                Discount(true, 0.2)
+//            ),
+//
+//
+//            )
+//        return mutableList
+//
+//    }
+//
+//    fun createOrderData(): MutableList<Orders> {
+//        val examplePlant = Seed(
+//            0,
+//            "Olive Tree",
+//            "description",
+//            1000,
+//            listOf(R.drawable.img_rectangle12),
+//            Category.SmallPlant,
+//            1,
+//            Discount(true, 0.2)
+//        )
+//        val exampleShop = Shop(0,"1","123","123","123",createData() , mutableListOf(),R.drawable.img_rectangle19 , Rating.FOUR_STAR ,100,"123")
+//        val exampleUser =
+//            User(0, "USER_NAME", "email_user@gmail.com", "USER_ADRESS", "+777777777777777", mutableListOf<Orders>(),"123")
+//
+//        var mut = mutableListOf(
+//            Orders(
+//                123,
+//                1000,
+//                examplePlant,
+//                10,
+//                adress = "ADRESS",
+//                shop = exampleShop,
+//                buyer = exampleUser,
+//                date = 12312,
+//                status = OrderStatus.InProgress
+//            ),
+//            Orders(
+//                124,
+//                2000,
+//                examplePlant,
+//                20,
+//                adress = "ADRESS",
+//                shop = exampleShop,
+//                buyer = exampleUser,
+//                date = 12312123,
+//                status = OrderStatus.Completed
+//            ),
+//
+//            Orders(
+//                125,
+//                6000,
+//                examplePlant,
+//                10,
+//                adress = "ADRESS",
+//                shop = exampleShop,
+//                buyer = exampleUser,
+//                date = 12312,
+//                status = OrderStatus.Canceled
+//            )
+//        )
+//
+//        return mut
+//    }
 
 
 }

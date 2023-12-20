@@ -76,7 +76,7 @@ lateinit var binding:ActivitySellerEditprofileOneBinding
             binding.txtEmail.text =order.buyer.email
            binding.txt9187543245678.text =order.buyer.number
             binding.txtLoremipsumdol.text =order.buyer.adress
-            binding.imagePlantOrderSeller.setImageResource(order.plant.images[0])
+            binding.imagePlantOrderSeller.setImageResource(order.plant.images)
             binding.txtMonsteraplants.text =order.plant.name
             binding.txtPriceOne.text =order.plant.price.toString()
 
