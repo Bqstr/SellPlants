@@ -1,7 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.SellSeeds" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+<!--    <style name="Theme.SellSeeds" parent="Theme.Material3.Dark.NoActionBar">-->
+
+<!--&lt;!&ndash;        <item name="colorPrimary">@color/greeeen</item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <item name="colorPrimaryVariant">@color/greeeen</item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <item name ="colorOnPrimary">@color/greeeen</item>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;        <item name="colorSecondary">@color/greeeen</item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <item name="colorSecondaryVariant">@color/greeeen</item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <item name ="colorOnSecondary">@color/greeeen</item>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <item name ="android:statusBarColor" tools:targetApi ="1" >@color/black</item>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;        &ndash;&gt;-->
+<!--    </style>-->
 </resources>

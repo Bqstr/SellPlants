@@ -1,12 +1,65 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.SellSeeds" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+<!--    <style name="Base.Theme.SellSeeds" parent="Theme.AppCompat.DayNight.DarkActionBar">-->
+<!--        &lt;!&ndash; Customize your light theme here. &ndash;&gt;-->
+<!--        <item name="android:windowSplashScreenBackground">@color/white</item>-->
+<!--        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash</item>-->
+<!--        <item name="android:windowSplashScreenAnimationDuration">5000</item>-->
+
+
+<!--        &lt;!&ndash; <item name="colorPrimary">@color/my_light_primary</item> &ndash;&gt;-->
+<!--    </style>-->
+
+
+
+
+    <style name="Base.Theme.SellSeeds" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/greeeen</item>
+        <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.SellSeeds" parent="Base.Theme.SellSeeds" />
-    <style name="Button.White" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">@android:color/white</item>
+
+
+
+
+    <style name="Theme.SellSeeds" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+<!--        <item name="colorPrimary">@color/white</item>-->
+<!--        <item name="colorPrimaryVariant">@color/white</item>-->
+<!--        <item name ="colorOnPrimary">@color/white</item>-->
+
+
+<!--        <item name="colorSecondary">@color/white</item>-->
+<!--        <item name="colorSecondaryVariant">@color/white</item>-->
+<!--        <item name ="colorOnSecondary">@color/white</item>-->
+
+        <item name ="android:statusBarColor" tools:targetApi ="1" >@color/gg</item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Customize your dark theme here. -->
+        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>

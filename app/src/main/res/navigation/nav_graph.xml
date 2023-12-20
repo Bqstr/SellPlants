@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/main_page_ic"
+        android:name="com.example.sellseeds.fragments.ListFragment.ListFragment"
+        android:label="ListFragment">
+        <action
+            android:id="@+id/action_listFragment_to_userAccount"
+            app:destination="@id/userAccount_ic" />
+    </fragment>
+    <fragment
+
+        android:id="@+id/userAccount_ic"
+        android:name="com.example.sellseeds.fragments.Seller.EditPlantFragment.EditPlant"
+        android:label="fragment_user_account"
+        tools:layout="@layout/fragment_user_account" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.sellseeds.fragments.LogInFramgnet.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_main_page_ic"
+            app:destination="@id/main_page_ic" />
+        <action
+            android:id="@+id/action_signInFragment_to_sellerHomePageFragment"
+            app:destination="@id/sellerHomePageFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_buyer_HomePageFragment"
+            app:destination="@id/buyer_HomePageFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_registerSellerFragment"
+            app:destination="@id/registerSellerFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_registerUserFragment"
+            app:destination="@id/registerUserFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerHomePageFragment"
+        android:name="com.example.sellseeds.fragments.Seller.HomePage.SellerHomePageFragment"
+        android:label="fragment_seller_home_page"
+        tools:layout="@layout/fragment_seller_home_page" >
+        <action
+            android:id="@+id/action_sellerHomePageFragment_to_seller_EditProfileFragment"
+            app:destination="@id/seller_EditProfileFragment" />
+        <action
+            android:id="@+id/action_sellerHomePageFragment_to_sellerProductInfoFragment"
+            app:destination="@id/sellerProductInfoFragment" />
+        <action
+            android:id="@+id/action_sellerHomePageFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_sellerHomePageFragment_to_seller_OrderFragment"
+            app:destination="@id/seller_OrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seller_EditProfileFragment"
+        android:name="com.example.sellseeds.fragments.Seller.EditProfile.Seller_EditProfileFragment"
+        android:label="delete"
+        tools:layout="@layout/activity_seller_editprofile" />
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="com.example.sellseeds.fragments.Seller.AddProduct.AddProductFragment"
+        android:label="fragment_add_product"
+        tools:layout="@layout/fragment_add_product" />
+    <fragment
+        android:id="@+id/seller_OrderFragment"
+        android:name="com.example.sellseeds.fragments.Seller.OrderFragment.Seller_OrderFragment"
+        android:label="fragment_seller__order"
+        tools:layout="@layout/fragment_seller__order" />
+    <fragment
+        android:id="@+id/sellerProductInfoFragment"
+        android:name="com.example.sellseeds.fragments.Seller.ProductDetails.SellerProductInfoFragment"
+        android:label="fragment_seller_product_info"
+        tools:layout="@layout/fragment_seller_product_info" />
+    <fragment
+        android:id="@+id/buyer_HomePageFragment"
+        android:name="com.example.sellseeds.fragments.Buyer.HomePage.Buyer_HomePageFragment"
+        android:label="Buyer_HomePageFragment"
+        tools:layout="@layout/activity_buyer_homepage"
+        >
+        <action
+            android:id="@+id/action_buyer_HomePageFragment_to_buyerEditProfileFragment"
+            app:destination="@id/buyerEditProfileFragment" />
+        <action
+            android:id="@+id/action_buyer_HomePageFragment_to_buyerShopFragment"
+            app:destination="@id/buyerShopFragment" />
+        <action
+            android:id="@+id/action_buyer_HomePageFragment_to_seller_OrderFragment"
+            app:destination="@id/seller_OrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerEditProfileFragment"
+        android:name="com.example.sellseeds.fragments.Buyer.EditProfilePage.BuyerEditProfileFragment"
+        android:label="fragment_buyer_edit_profile"
+        tools:layout="@layout/activity_user_editprofile" >
+        <action
+            android:id="@+id/action_buyerEditProfileFragment_to_buyerOrderFragment"
+            app:destination="@id/buyerOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderFragment"
+        android:name="com.example.sellseeds.fragments.Buyer.Orders.BuyerOrderFragment"
+        android:label="fragment_buyer_order"
+        tools:layout="@layout/fragment_buyer_order" >
+        <action
+            android:id="@+id/action_buyerOrderFragment_to_buyerOrderDetailFragment"
+            app:destination="@id/buyerOrderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderDetailFragment"
+        android:name="com.example.sellseeds.fragments.Buyer.OrderDetails.BuyerOrderDetailFragment"
+        android:label="fragment_buyer_order_detail"
+        tools:layout="@layout/fragment_buyer_order_detail" />
+    <fragment
+        android:id="@+id/buyerShopFragment"
+        android:name="com.example.sellseeds.fragments.Buyer.Shop.BuyerShopFragment"
+        android:label="fragment_buyer_shop"
+        tools:layout="@layout/fragment_buyer_shop" />
+    <fragment
+        android:id="@+id/registerSellerFragment"
+        android:name="com.example.sellseeds.fragments.Seller.registerSeller.RegisterSellerFragment"
+        android:label="fragment_register_seller"
+        tools:layout="@layout/fragment_register_seller" >
+        <action
+            android:id="@+id/action_registerSellerFragment_to_sellerHomePageFragment"
+            app:destination="@id/sellerHomePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerUserFragment"
+        android:name="com.example.sellseeds.fragments.Buyer.registerUser.RegisterUserFragment"
+        android:label="fragment_register_user"
+        tools:layout="@layout/fragment_register_user" >
+        <action
+            android:id="@+id/action_registerUserFragment_to_buyer_HomePageFragment"
+            app:destination="@id/buyer_HomePageFragment" />
+    </fragment>
+</navigation>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/linearRowrectangletwelveOne"
+        style="@style/groupStylewhite_A700cornerRadius"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/_13pxv"
+        android:layout_marginEnd="10dp"
+        android:gravity="start"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageRectangleTwelveOne"
+
+            android:src="@drawable/faux_palm_tree"
+            android:layout_width="@dimen/_110pxh"
+            android:layout_height="@dimen/_108pxh"
+            android:layout_marginStart="@dimen/_16pxh"
+            android:layout_marginTop="@dimen/_19pxv"
+
+            android:layout_marginBottom="@dimen/_18pxv"
+            android:scaleType="fitXY" />
+
+        <LinearLayout
+            android:id="@+id/linearColumnoffer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16pxh"
+            android:layout_marginTop="@dimen/_19pxv"
+            android:layout_marginEnd="@dimen/_24pxh"
+            android:layout_marginBottom="@dimen/_25pxv"
+            android:layout_weight="0.61"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtOffer"
+                style="@style/txtSolidRoundedOutline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10pxh"
+                android:ellipsize="end"
+                android:paddingStart="@dimen/_7pxh"
+                android:paddingTop="@dimen/_2pxv"
+                android:paddingEnd="@dimen/_6pxh"
+                android:paddingBottom="@dimen/_4pxv"
+                android:singleLine="true"
+                android:text="@string/lbl_10_off" />
+
+            <FrameLayout
+                android:id="@+id/frameStackmonsteraplantsOne"
+                android:layout_width="@dimen/_170pxh"
+                android:layout_height="90dp"
+                android:layout_marginTop="@dimen/_4pxv">
+
+                <LinearLayout
+                    android:id="@+id/linearColumnmonsteraplantsOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_marginBottom="@dimen/_2pxv"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtMonsteraplantsOne"
+                        style="@style/txtSFProTextregular20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/lbl_monstera_plants" />
+
+                    <TextView
+                        android:id="@+id/txtFlowerplantOne"
+                        style="@style/txtSFProTextregular17"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1pxv"
+                        android:layout_marginEnd="@dimen/_10pxh"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/lbl_flower_plant" />
+
+                    <LinearLayout
+                        android:id="@+id/linearRowpriceThree"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_1pxv"
+                        android:layout_marginEnd="@dimen/_10pxh"
+                        android:gravity="start"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_marginEnd="20dp"
+
+                            android:id="@+id/txtPriceThree"
+                            style="@style/txtSFProTextsemibold18_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.53"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="399" />
+
+                        <TextView
+
+                            android:id="@+id/txtNewPrice"
+                            style="@style/txtSFProTextsemibold18_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.53"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="399" />
+
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

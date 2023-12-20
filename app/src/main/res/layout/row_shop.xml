@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/linearRowrectangletwelveTwo"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal" style="@style/groupStylewhite_A700cornerRadius">
+        <ImageView android:id="@+id/imageRectangleTwelveTwo"
+            android:layout_height="@dimen/_108pxh"
+            android:layout_marginBottom="@dimen/_18pxv"
+            android:layout_marginStart="@dimen/_16pxh"
+            android:layout_marginTop="@dimen/_19pxv"
+            android:layout_width="@dimen/_110pxh"
+            android:scaleType="fitXY" cornerRadius="@{@dimen/_7pxh}"
+            imageRes="@{@drawable/img_rectangle12}"
+            tools:ignore="ContentDescription" tools:src="@drawable/img_rectangle12"/>
+        <FrameLayout android:id="@+id/frameStackmonsteraplantsTwo"
+            android:layout_height="@dimen/_89pxv"
+            android:layout_marginBottom="@dimen/_25pxv"
+            android:layout_marginEnd="@dimen/_24pxh"
+            android:layout_marginStart="@dimen/_16pxh"
+            android:layout_marginTop="@dimen/_30pxv" android:layout_width="@dimen/_170pxh">
+            <LinearLayout
+                android:id="@+id/linearColumnmonsteraplantsTwo"
+                android:layout_gravity="top|start"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10pxv"
+                android:layout_marginEnd="@dimen/_10pxh"
+                android:layout_width="match_parent" android:orientation="vertical">
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtMonsteraplantsTwo"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    android:text="@string/lbl_monstera_plants"
+                    style="@style/txtSFProTextregular20" tools:text="@string/lbl_monstera_plants"/>
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtFlowerplantTwo"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_marginTop="@dimen/_1pxv"
+                    android:layout_width="match_parent"
+                    android:singleLine="true"
+                    android:text="@string/lbl_flower_plant"
+                    style="@style/txtSFProTextregular17" tools:text="@string/lbl_flower_plant"/>
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtPriceFive"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10pxh"
+                    android:layout_marginTop="@dimen/_1pxv"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/lbl_399"
+                    style="@style/txtSFProTextsemibold18_5" tools:text="@string/lbl_399"/>
+            </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:ellipsize="end" android:gravity="center"
+                android:id="@+id/btnAddTwo"
+                android:layout_gravity="bottom|end"
+                android:layout_height="@dimen/_24pxv"
+                android:layout_marginStart="@dimen/_10pxh"
+                android:layout_marginTop="@dimen/_10pxv"
+                android:layout_width="@dimen/_50pxh"
+                android:paddingBottom="@dimen/_3pxv"
+                android:paddingEnd="@dimen/_10pxh"
+                android:paddingStart="@dimen/_10pxh"
+                android:paddingTop="@dimen/_3pxv"
+                android:singleLine="true" android:text="@string/lbl_add"
+                android:textAllCaps="false"
+                style="@style/btnSolidRoundedOutline" tools:text="@string/lbl_add"/>
+        </FrameLayout>
+    </LinearLayout>

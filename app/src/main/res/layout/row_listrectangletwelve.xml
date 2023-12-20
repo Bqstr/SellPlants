@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+        android:gravity="center_horizontal"
+        android:id="@+id/linearColumnrectangletwelve"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:orientation="vertical" style="@style/groupStylewhite_A700cornerRadius">
+        <ImageView android:id="@+id/imageRectangleTwelve"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/_108pxh"
+            android:layout_marginEnd="@dimen/_10pxh"
+            android:layout_marginStart="@dimen/_10pxh"
+            android:layout_marginTop="@dimen/_20pxv"
+            android:layout_width="@dimen/_110pxh"
+            android:scaleType="fitXY" cornerRadius="@{@dimen/_7pxh}"
+            imageRes="@{@drawable/img_rectangle12}"
+            tools:ignore="ContentDescription" tools:src="@drawable/img_rectangle12"/>
+        <LinearLayout android:gravity="start"
+            android:id="@+id/linearColumnmonsteraplants"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_16pxv"
+            android:layout_marginEnd="@dimen/_10pxh"
+            android:layout_marginStart="@dimen/_10pxh"
+            android:layout_marginTop="@dimen/_6pxv"
+            android:layout_width="match_parent" android:orientation="vertical">
+            <TextView android:ellipsize="end"
+                android:id="@+id/txtMonsteraplants"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+                android:text="@string/lbl_monstera_plants"
+                style="@style/txtSFProTextregular18_3" tools:text="@string/lbl_monstera_plants"/>
+            <LinearLayout android:id="@+id/linearRowqtyone"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_3pxv"
+                android:layout_width="match_parent" android:orientation="horizontal">
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtQtyOne"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2pxv"
+                    android:layout_weight="0.47"
+                    android:layout_width="0dp" android:singleLine="true"
+                    android:text="@string/lbl_qty_1"
+                    style="@style/txtSFProTextregular16" tools:text="@string/lbl_qty_1"/>
+                <TextView android:ellipsize="end"
+                    android:id="@+id/txtPrice"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_1pxv"
+                    android:layout_marginStart="@dimen/_36pxh"
+                    android:layout_weight="0.53"
+                    android:layout_width="0dp" android:singleLine="true"
+                    android:text="@string/lbl_399"
+                    style="@style/txtSFProTextsemibold18" tools:text="@string/lbl_399"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+

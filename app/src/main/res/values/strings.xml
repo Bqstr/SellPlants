@@ -5,5 +5,166 @@
     <string name="navigation_drawer_open">Drawer Open</string>
     <string name="navigation_drawer_close">Drawer Closed</string>
 
+
+    <string name="Log_In_chosen"><b><u>Log In</u></b></string>
+    <string name="Log_In">Log In</string>
+
+    <string name="Sign_In_chosen"><b><u>Sign In</u></b></string>
+    <string name="Sign_In">Sign In</string>
+
+
+    <string name="loading">Loading…</string>
+    <string name="no_internet_connection">No internet connection!</string>
+    <string name="lbl_shop">shop</string>
+    <string name="lbl_order_to">order to</string>
+    <string name="msg_not_have_an_acc2">not have an account? </string>
+    <string name="lbl_flower_plant">Flower plant</string>
+    <string name="lbl_phone">phone</string>
+    <string name="lbl_1087543245678">1087543245678</string>
+    <string name="lbl_4_5_5">4.5/5</string>
+    <string name="lbl_gujrat">gujrat</string>
+    <string name="msg_loremipsum_gmai">loremipsum@gmail.com</string>
+    <string name="lbl_state">state</string>
+    <string name="lbl_country">country</string>
+    <string name="lbl_description">description</string>
+    <string name="lbl_register_seller">register Seller</string>
+    <string name="msg_46_lorem_ipsum">46, Lorem ipsum dolor sitamet,Gujrat</string>
+    <string name="msg_lorem_ipsum_dol3">Lorem ipsum dolor amet, consectetur adipiscing elit. Pellentesque arcu cursus sit platea. Enim. </string>
+    <string name="msg_go_green_nursar">go green nursary</string>
+    <string name="lbl_20_4_2022">20/4/2022</string>
+    <string name="msg_lorem_ipsum_dol2">Lorem ipsum dolor sit amet,Gujrat</string>
+    <string name="msg_are_you_a_selle2">are you a seller? </string>
+    <string name="msg_are_you_a_selle">are you a seller? register as seller</string>
+    <string name="lbl_91_87543245678">+91 87543245678</string>
+    <string name="lbl_monstera_plants">monstera plants</string>
+    <string name="lbl_india">india</string>
+    <string name="lbl_order_status">order status</string>
+    <string name="lbl_buyer_phone">buyer phone</string>
+    <string name="msg_forgot_password">forgot password?</string>
+    <string name="lbl_price">price</string>
+    <string name="lbl_total_499">total : \u20b9499</string>
+    <string name="lbl_499">\u20b9499</string>
+    <string name="msg_register_as_sel">register as seller</string>
+    <string name="lbl_shop_open">shop open</string>
+    <string name="lbl_edit_profile">edit profile</string>
+    <string name="lbl_in_progress">in progress</string>
+    <string name="lbl_date">date</string>
+    <string name="msg_loremip_gmail_c">loremip@gmail.com</string>
+    <string name="msg_bring_nature_in">Bring Nature
+Into Your Home
+With Our Plants</string>
+    <string name="msg_discount_e_g">discount (e.g. 10% off)</string>
+    <string name="msg_gogreen56_gmail">gogreen56@gmail.com</string>
+    <string name="lbl_aelovera_plants">aelovera plants</string>
+    <string name="lbl_1299">\u20b91299</string>
+    <string name="lbl_amount">amount</string>
+    <string name="lbl_ordered_items">ordered items</string>
+    <string name="lbl_buyer_email">buyer email</string>
+    <string name="msg_order_price_1">order price : 1600</string>
+    <string name="lbl_cancelled">cancelled</string>
+    <string name="lbl_order_id">order id</string>
+    <string name="msg_lorem_ipsuavolu">Lorem ipsuaVolutpat, lacus urna, purus amet, vel sed,gujrat.</string>
+    <string name="msg_not_have_an_acc">not have an account? register</string>
+    <string name="lbl_40rs">40rs</string>
+    <string name="lbl_amount_399_0">amount : \u20b9399.0 </string>
+    <string name="lbl_completed">completed</string>
+    <string name="lbl_password">password</string>
+    <string name="lbl_title">title</string>
+    <string name="msg_complete_addres">complete address</string>
+    <string name="msg_monstera_plants">monstera plants(3)</string>
+    <string name="msg_total_price_1">total Price : 1650 </string>
+    <string name="lbl_01_04_2022">01/04/2022</string>
+    <string name="lbl_shop_name">shop name</string>
+    <string name="lbl_our_plants">Our Plants</string>
+    <string name="lbl_write_review">write review</string>
+    <string name="msg_91_99_xx_999_x">+91 99 xX 999 XXX</string>
+    <string name="lbl_city">city</string>
+    <string name="lbl_category">category</string>
+    <string name="lbl_product2">Product</string>
+    <string name="lbl_4992">\u20b9 499</string>
+    <string name="lbl_discount">discount</string>
+    <string name="lbl_rajkot">rajkot</string>
+    <string name="lbl_add_product">add product</string>
+    <string name="lbl_shop_review">shop review</string>
+    <string name="msg_delivery_addres">delivery address</string>
+    <string name="lbl_ravi_jagani">ravi jagani</string>
+    <string name="lbl_qty_8">qty : 8</string>
+    <string name="lbl_4_5">4.5</string>
+    <string name="lbl_register_user">register user</string>
+    <string name="lbl_lorem_shop">lorem shop</string>
+    <string name="lbl_4_6">4.6</string>
+    <string name="msg_go_green_nurser">go green nursery</string>
+    <string name="lbl_499_qty">\u20b9499[qty]</string>
+    <string name="lbl_total">total : </string>
+    <string name="lbl_search_here">search here...</string>
+    <string name="lbl_shops">shops</string>
+    <string name="lbl_qty_1">qty : 1</string>
+    <string name="lbl_discount_price">discount price</string>
+    <string name="lbl_get_started">get started</string>
+    <string name="msg_lorem_ipsum_dol">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque arcu cursus sit platea. Enim. </string>
+    <string name="msg_type_review">type review........</string>
+    <string name="lbl_299">\u20b9299</string>
+    <string name="lbl_quantity">quantity</string>
+    <string name="lbl_confim_password">confim password</string>
+    <string name="lbl_register">register</string>
+    <string name="msg_bring_nature_in2">Bring Nature
+Into Your Home
+With </string>
+    <string name="lbl_confim_order">confim order</string>
+    <string name="msg_aelovera_plants">Aelovera plants(1)</string>
+    <string name="lbl_items">items</string>
+    <string name="lbl_product_details">product details</string>
+    <string name="lbl_masscan_plants">masscan plants</string>
+    <string name="msg_how_was_your_ex">how was your experience with the seller?</string>
+    <string name="lbl_email">email</string>
+    <string name="msg_delivery_fees">delivery fees : \u20b950</string>
+    <string name="lbl_delivery_fee">delivery fee</string>
+    <string name="lbl_1">1</string>
+    <string name="lbl_add_to_cart">add to cart</string>
+    <string name="lbl_login">login</string>
+    <string name="lbl_lorem_ipsum">lorem ipsum</string>
+    <string name="msg_jaganiravi_gmai">jaganiravi@gmail.com</string>
+    <string name="lbl_add">ADD</string>
+    <string name="lbl_shop1">shop1</string>
+    <string name="lbl_18_04_1999">18/04/1999</string>
+    <string name="msg_order_id_1013">order ID : 1013084756</string>
+    <string name="lbl_update">update</string>
+    <string name="msg_your_feedback_i">your feedback is important to improve our services.</string>
+    <string name="msg_delivery_fees2">delivery fees : 50</string>
+    <string name="lbl_orders">orders</string>
+    <string name="lbl_product">product</string>
+    <string name="lbl_399">\u20b9 399</string>
+    <string name="lbl_10_off">10% off</string>
+    <string name="lbl_order_details">order details</string>
+    <string name="msg_near_a_iscon_te">near a iscon temple</string>
+    <string name="lbl_full_name">full name</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+
+
+        <string-array name="category_array">
+            <item>Big Plant</item>
+            <item>Medium Plant</item>
+            <item>Small Plant</item>
+
+        </string-array>
+
+
+
+
+
 </resources>
+
+
+
+
+
+
+
+
+
+

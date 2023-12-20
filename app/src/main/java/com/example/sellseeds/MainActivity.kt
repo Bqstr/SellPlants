@@ -2,15 +2,18 @@ package com.example.sellseeds
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toolbar
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.core.content.ContextCompat
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
+
 import com.example.sellseeds.databinding.ActivityMainBinding
-import com.google.android.material.navigation.NavigationView
+import com.example.sellseeds.fragments.ListFragment.ListFragment
+import com.example.sellseeds.model.Repositories
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 //Login screen
 interface Navigation{
@@ -19,21 +22,47 @@ interface Navigation{
     fun toListPage()
 }
 class MainActivity : AppCompatActivity() {
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var drawerToggle: ActionBarDrawerToggle
-    private lateinit var navigationView: NavigationView
+
+
+    private lateinit var navController :NavController
+
     lateinit var binding :ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        //installSplashScreen()
+
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        Repositories.init(applicationContext)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+
+        //window.statusBarColor = ContextCompat.getColor(this, R.color.greeeen)
+
+setContentView(binding.root)
 
 
 
+        val navHostFragment =supportFragmentManager.findFragmentById(R.id.fragment_conteiner) as NavHostFragment
+        navController =navHostFragment.navController
+        val bottomNavigationView =findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        setupWithNavController(bottomNavigationView,navController)
+
+window.decorView.setBackgroundColor(   getResources().getColor(R.color.white))
 
 
-
-
+//        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+//            when(it.itemId){
+//                R.id.userAccount_ic ->{
+//                   // findNavController(R.id.fragment_conteiner).navigate(R.id.action_listFragment_to_userAccount)
+//
+//
+//                }
+//                R.id.main_page_ic ->{
+//
+//                }
+//            }
+//            true
+//        }
 
 
 
@@ -46,6 +75,7 @@ class MainActivity : AppCompatActivity() {
 //                .add(R.id.fragmentContainerView, fragment)
 //                .commit()
 //        }
+
     }
 
 
@@ -53,9 +83,11 @@ class MainActivity : AppCompatActivity() {
 
 
     fun toListPage() {
-        val fragment = ListFragment.newInstance(this "123")
+        
+        val fragment = ListFragment.newInstance("123","123")
         supportFragmentManager
             .beginTransaction()
+
             .replace(R.id.fragment_conteiner, fragment)
             .addToBackStack(null)
             .commit()
@@ -63,12 +95,12 @@ class MainActivity : AppCompatActivity() {
 
 
     fun toLogInPage() {
-        val fragment = LogIn_Fragment.newInstance("123", "123")
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.fragment_conteiner, fragment)
-            .addToBackStack(null)
-            .commit()
+//        val fragment = LogIn_Fragment.newInstance("123", "123")
+//        supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.fragment_conteiner, fragment)
+//            .addToBackStack(null)
+//            .commit()
     }
 
 
