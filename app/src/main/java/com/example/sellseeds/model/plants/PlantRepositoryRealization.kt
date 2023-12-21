@@ -8,7 +8,7 @@ import com.example.sellseeds.model.shop.ShopDao
 import com.example.sellseeds.model.user.UserCurrentId
 
 class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurrentId,val shopDao: ShopDao):PlantsRepository {
-    override fun getShops(): List<Shop> {
+    override suspend  fun getShops(): List<Shop> {
         if(shopDao.getAll()==null){
             return listOf()
         }
@@ -16,14 +16,14 @@ class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurre
 
     }
 
-    override fun addPlant(seed: Seed) {
+    override suspend  fun addPlant(seed: Seed) {
         dao.createPlant(PlantDbEntity.fromSeed(seed))
             }
 
 
 
 
-    override fun getAllPlants(): List<Seed>{
+    override suspend  fun getAllPlants(): List<Seed>{
         if(dao.getAllPlants()!=null){
             return dao.getAllPlants()!!.map { PlantDbEntity -> toSeed(PlantDbEntity!!) }
 
@@ -31,12 +31,12 @@ class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurre
         return listOf()
     }
 
-    override fun getPlantById(id: Int): Seed? {
+    override suspend  fun getPlantById(id: Int): Seed? {
 
         return dao.getPlantById(id)!!.toSeed()
     }
 
-    override fun getPlantsByShopId(shop_id: Int): List<PlantDbEntity?>? {
+    override suspend  fun getPlantsByShopId(shop_id: Int): List<PlantDbEntity?>? {
         if(dao.getPlantsByShopId(shop_id)==null){
             return listOf()
         }

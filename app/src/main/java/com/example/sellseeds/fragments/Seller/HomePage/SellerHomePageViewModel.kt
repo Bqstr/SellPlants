@@ -1,5 +1,6 @@
 package com.example.sellseeds.fragments.Seller.HomePage
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,10 +13,14 @@ import com.example.sellseeds.dataClass_enum.Rating
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
 import com.example.sellseeds.dataClass_enum.User
+import com.example.sellseeds.model.plants.PlantsRepository
+import com.example.sellseeds.model.plants.entenies.PlantDbEntity
+import com.example.sellseeds.model.shop.ShopCurrentId
+import com.example.sellseeds.model.shop.ShopRepository
 
-class SellerHomePageViewModel: ViewModel() {
+class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepository: PlantsRepository ,val currentId: ShopCurrentId): ViewModel() {
 
-
+    val shop_currentId =MutableLiveData<Int>()
     private var _orderList =MutableLiveData<MutableList<Orders>>()
     var orderList :LiveData<MutableList<Orders>> =_orderList
 
@@ -35,6 +40,8 @@ class SellerHomePageViewModel: ViewModel() {
 
 
     }
+    val plantList=MutableLiveData<List<Seed>>()
+
 
     fun addProduct(product:Seed){
         if(productList.value!=null){
@@ -46,6 +53,22 @@ class SellerHomePageViewModel: ViewModel() {
             val list = mutableListOf<Seed>()
             list.add(product)
             _productList.postValue(list)
+        }
+    }
+    suspend fun getCurrentId(){
+        Log.d("xzxzxzxzx" ,currentId.getCurrentId().toString())
+
+        shop_currentId.postValue(currentId.getCurrentId())
+    }
+
+    suspend fun getAllMyPlants(){
+        Log.d("1111111111111",plantsRepository.getPlantsByShopId(currentId.getCurrentId()).toString())
+
+        if(plantsRepository.getPlantsByShopId(currentId.getCurrentId())==null){
+            plantList.postValue(mutableListOf())
+        }
+        else{
+            plantList.postValue(plantsRepository.getPlantsByShopId(currentId.getCurrentId())!!.map { PlantDbEntity ->PlantDbEntity!!.toSeed() })
         }
     }
 

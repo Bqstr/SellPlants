@@ -8,12 +8,12 @@ class ShopIdRealization(appContext:Context):ShopCurrentId {
     )
 
 
-    override fun getCurrentId(): Int =sharedPreferences.getInt(CURRENT_SHOP_ID ,-1)
+     override suspend fun getCurrentId(): Int =sharedPreferences.getInt(CURRENT_SHOP_ID ,-1)
 
 
 
 
-    override fun setCurrentId(shopId: Int){
+    override suspend fun setCurrentId(shopId: Int){
         sharedPreferences.edit()
             .putInt(CURRENT_SHOP_ID, shopId)
             .apply()

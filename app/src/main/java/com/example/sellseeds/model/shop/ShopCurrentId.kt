@@ -1,7 +1,7 @@
 package com.example.sellseeds.model.shop
 
 interface ShopCurrentId {
-    fun getCurrentId():Int
+    suspend fun getCurrentId():Int
 
-    fun setCurrentId(id:Int)
+    suspend fun setCurrentId(id:Int)
 }

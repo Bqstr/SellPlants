@@ -7,16 +7,16 @@ import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 
 interface PlantsRepository {
 
-    fun getShops():List<Shop>
+    suspend fun getShops():List<Shop>
 
-    fun addPlant(plant:Seed)
+    suspend fun addPlant(plant:Seed)
 
  //   fun deletePlant(plant:Plant)
 
 
-    fun getAllPlants():List<Seed?>?
+    suspend fun getAllPlants():List<Seed?>?
 
-    fun getPlantById(id:Int): Seed?
+    suspend fun getPlantById(id:Int): Seed?
 
-    fun getPlantsByShopId(shop_id:Int):List<PlantDbEntity?>?
+    suspend fun getPlantsByShopId(shop_id:Int):List<PlantDbEntity?>?
 }

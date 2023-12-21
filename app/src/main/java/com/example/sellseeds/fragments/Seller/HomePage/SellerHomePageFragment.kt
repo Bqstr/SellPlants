@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.clearFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,10 @@ import com.example.sellseeds.databinding.ActivitySellerHomepageOneBinding
 import com.example.sellseeds.fragments.Seller.AddProduct.ADD_PRODUCT_KEY
 import com.example.sellseeds.fragments.Seller.OrderFragment.ActionOrder
 import com.example.sellseeds.fragments.Seller.OrderFragment.BACK_FROM_ORDER
+import com.example.sellseeds.model.Repositories
+import com.example.sellseeds.viewModelCreator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 const val GO_SELLER_EDITPROFILE ="GO_SELLER_EDITPROFILE"
 const val GO_ORDER_DETAILS ="GO_ORDER_DETAILS"
@@ -35,7 +40,7 @@ class SellerHomePageFragment : Fragment() {
 
 lateinit var binding:ActivitySellerHomepageOneBinding
 
-val viewModel by viewModels<SellerHomePageViewModel>()
+val viewModel by viewModelCreator { SellerHomePageViewModel(Repositories.shopRepository ,Repositories.plantsRepository ,Repositories.shopCurrentId) }
 var isProductPressed =true
     lateinit var productAdapter: SeedsAdapter
     lateinit var orderAdapter: OrdersAdapter
@@ -58,7 +63,15 @@ init {
          orderAdapter = OrdersAdapter(findNavController(),context, false)
 
 
+        viewModel.shop_currentId.observe(viewLifecycleOwner){
+            Log.d("xzxzxzxzx" ,it.toString())
 
+        }
+
+
+            lifecycleScope.launch (Dispatchers.IO){
+                viewModel.getCurrentId()
+            }
         if(arguments!=null){
             Log.d("111111111111111111","not null  ")
 
@@ -76,6 +89,16 @@ init {
 
 
         }
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.getAllMyPlants()
+        }
+        viewModel.plantList.observe(viewLifecycleOwner) {
+
+            productAdapter.seeds =it.toMutableList()
+            productAdapter.notifyDataSetChanged()
+
+        }
+
 
 
 

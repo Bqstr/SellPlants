@@ -76,6 +76,12 @@ lateinit var binding:ActivityLoginBinding
 
             }
         }
+        lifecycleScope.launch(Dispatchers.IO){
+           val t = viewModel.getShops()
+            for(a in 0 until t!!.size){
+                Log.d("aaaaaaaaasdsdsdw", t[a].toString())
+            }
+        }
 
         binding.logInApp.setOnClickListener{
             val email =binding.emailLogIn.text.toString()

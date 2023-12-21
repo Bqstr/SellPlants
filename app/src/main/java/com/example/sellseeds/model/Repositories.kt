@@ -2,6 +2,8 @@ package com.example.sellseeds.model
 
 import android.content.Context
 import androidx.room.Room
+import com.example.sellseeds.model.plants.PlantRepositoryRealization
+import com.example.sellseeds.model.plants.PlantsRepository
 import com.example.sellseeds.model.user.UserCurrentId
 import com.example.sellseeds.model.user.UserCurrentIdRealization
 import com.example.sellseeds.model.shop.ShopCurrentId
@@ -36,6 +38,9 @@ object Repositories {
     }
     val shopRepository:ShopRepository by lazy{
         ShopRepositoryRealization(database1.getShopDao() , shopCurrentId = shopCurrentId)
+    }
+    val plantsRepository:PlantsRepository by lazy{
+        PlantRepositoryRealization(database1.getPlantDao() , userCurrentId = userCurrentId, shopDao =  database1.getShopDao())
     }
 
 

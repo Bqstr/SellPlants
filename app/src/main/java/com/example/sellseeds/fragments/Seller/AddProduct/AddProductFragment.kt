@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 
 import com.example.sellseeds.R
@@ -19,6 +20,10 @@ import com.example.sellseeds.dataClass_enum.Converter
 import com.example.sellseeds.dataClass_enum.Discount
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.databinding.ActivityAddproductBinding
+import com.example.sellseeds.model.Repositories
+import com.example.sellseeds.viewModelCreator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -28,17 +33,11 @@ import com.example.sellseeds.databinding.ActivityAddproductBinding
 const val ADD_PRODUCT_KEY ="ADD_PRODUCT_KEY"
 
 class AddProductFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 lateinit var binding:ActivityAddproductBinding
+val viewModel by viewModelCreator { AddProductViewModel(
+    Repositories.plantsRepository ,Repositories.shopCurrentId ,Repositories.shopRepository)
+}
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -67,40 +66,56 @@ lateinit var binding:ActivityAddproductBinding
             }
 
         }
-        binding.btnAddProductOne.setOnClickListener{
 
 
-            val title =binding.etGroupEleven.text.toString()
-            val descr =binding.etGroupTwelve.text.toString()
+        viewModel.currentId.observe(viewLifecycleOwner){
+
+            val title = binding.etGroupEleven.text.toString()
+            val descr = binding.etGroupTwelve.text.toString()
 //
-            val count =binding.etGroupFive.text.toString().toInt()
-            val price =binding.etGroupThirtySeven.text.toString().toInt()
-            var discount =Discount()
-            if(binding.dicountSwithAppProduct.isChecked){
-                discount=Discount(binding.dicountSwithAppProduct.isChecked, binding.etOffer.text.toString().toDouble())
+            val count = binding.etGroupFive.text.toString().toInt()
+            val price = binding.etGroupThirtySeven.text.toString().toInt()
+            var discount = Discount()
+            if (binding.dicountSwithAppProduct.isChecked) {
+                discount = Discount(
+                    binding.dicountSwithAppProduct.isChecked,
+                    binding.etOffer.text.toString().toDouble()
+                )
 
             }
 
+            val product = Seed(
+                0,
+                title,
+                descr,
+                category = category,
+                quantity = count,
+                price = price,
+                discount = discount,
+                images = R.drawable.faux_palm_tree,
+                shop_id =it
+            )
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.addProduct(product)
+            }
+
+
+            Log.d("122323234123" ,it.toString())
+            Log.d("122323234123" ,product.toString())
 
 
 
 
 
-
-
-
-
-            val product = Seed(10, title,descr, category =  category, quantity = count, price =price, discount =  discount,
-                images = R.drawable.faux_palm_tree , shop_id = 0)
-
-
-            var arg =Bundle()
-
-            arg.putSerializable(ADD_PRODUCT_KEY ,product)
-
-            setFragmentResult(ADD_PRODUCT_KEY, arg)
 
             findNavController().navigateUp()
+        }
+        binding.btnAddProductOne.setOnClickListener{
+
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.getCurrentShop_id()
+            }
         }
 
 

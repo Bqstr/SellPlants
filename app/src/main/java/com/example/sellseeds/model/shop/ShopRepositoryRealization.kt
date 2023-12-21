@@ -9,7 +9,7 @@ class ShopRepositoryRealization(val dao: ShopDao , val shopCurrentId:ShopCurrent
 ):ShopRepository {
     override suspend fun createShop(shop: Shop) {
         dao.registerShop(ShopDbEntity.fromShop(shop))
-        shopCurrentId.setCurrentId(shop.id)
+       shopCurrentId.setCurrentId(dao.getByEmail(shop.email)!!.id)
     }
 
     override suspend fun signInShop(email: String, password: String) :Boolean{
