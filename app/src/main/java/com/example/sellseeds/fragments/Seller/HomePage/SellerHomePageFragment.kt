@@ -40,7 +40,7 @@ class SellerHomePageFragment : Fragment() {
 
 lateinit var binding:ActivitySellerHomepageOneBinding
 
-val viewModel by viewModelCreator { SellerHomePageViewModel(Repositories.shopRepository ,Repositories.plantsRepository ,Repositories.shopCurrentId) }
+val viewModel by viewModelCreator { SellerHomePageViewModel(Repositories.shopRepository ,Repositories.plantsRepository ,Repositories.shopCurrentId ,Repositories.ordersRepository) }
 var isProductPressed =true
     lateinit var productAdapter: SeedsAdapter
     lateinit var orderAdapter: OrdersAdapter
@@ -60,7 +60,7 @@ init {
 
         productAdapter = SeedsAdapter(findNavController(), context, layoutInflater)
 
-         orderAdapter = OrdersAdapter(findNavController(),context, false)
+         orderAdapter = OrdersAdapter(findNavController(),context, false ,Repositories.ordersRepository ,Repositories.shopRepository)
 
 
         viewModel.shop_currentId.observe(viewLifecycleOwner){
@@ -71,6 +71,7 @@ init {
 
             lifecycleScope.launch (Dispatchers.IO){
                 viewModel.getCurrentId()
+                viewModel
             }
         if(arguments!=null){
             Log.d("111111111111111111","not null  ")
@@ -98,6 +99,14 @@ init {
             productAdapter.notifyDataSetChanged()
 
         }
+
+        viewModel.orderList.observe(viewLifecycleOwner){
+
+            orderAdapter.orders =it
+            orderAdapter.notifyDataSetChanged()
+        }
+
+
 
 
 
@@ -144,10 +153,6 @@ init {
         viewModel.isProductPressed.observe(viewLifecycleOwner,{
             Log.d("12312312312312321","changed")
             isProductPressed =it
-        })
-        viewModel.orderList.observe(viewLifecycleOwner,{
-            orderAdapter.orders =it
-            orderAdapter.notifyDataSetChanged()
         })
         viewModel.productList.observe(viewLifecycleOwner,{
             Log.d("dsfnjkasdbfjsabdljfksa",it.get(0).name)

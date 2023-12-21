@@ -2,10 +2,12 @@ package com.example.sellseeds.model
 
 import androidx.room.TypeConverter
 import com.example.sellseeds.dataClass_enum.Discount
+import com.example.sellseeds.dataClass_enum.Orders
 import com.example.sellseeds.dataClass_enum.Rating
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
 import com.example.sellseeds.dataClass_enum.User
+import com.example.sellseeds.model.orders.OrderDbEntity
 import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 import com.example.sellseeds.model.shop.entities.ShopDbEntity
 import com.example.sellseeds.model.user.entities.UserDbEntity
@@ -69,6 +71,17 @@ class UserConverters {
 
             }
             return PlantDbEntity(seed.id ,seed.name ,seed.description ,seed.price ,seed.images ,seed.quantity ,false ,0.0 ,seed.category, seed.shop_id)
+
+        }
+
+    @TypeConverter
+    fun toOrder(orderDbEntity:OrderDbEntity): Orders {
+        return Orders(orderDbEntity.id, orderDbEntity.price ,null,orderDbEntity.amount ,orderDbEntity.plant_id,orderDbEntity.user_id,null, orderDbEntity.status ,orderDbEntity.date ,orderDbEntity.adress )
+    }
+
+@TypeConverter
+        fun fromOrder(order: Orders): OrderDbEntity {
+            return OrderDbEntity(order.id ,order.price ,order.amount ,order.plant_id ,order.user_id ,order.status ,order.date ,order.adress)
 
         }
 

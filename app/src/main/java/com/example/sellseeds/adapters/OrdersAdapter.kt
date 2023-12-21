@@ -12,8 +12,10 @@ import com.example.sellseeds.dataClass_enum.OrderStatus
 import com.example.sellseeds.dataClass_enum.Orders
 import com.example.sellseeds.databinding.OrderItemBinding
 import com.example.sellseeds.fragments.Seller.OrderFragment.OrderDetailwithUser
+import com.example.sellseeds.model.orders.OrdersRepository
+import com.example.sellseeds.model.shop.ShopRepository
 
-class OrdersAdapter (val navConteoller: NavController, val context: Context?, var isBuyer:Boolean): RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>(){
+class OrdersAdapter (val navConteoller: NavController, val context: Context?, var isBuyer:Boolean ,val ordersRepository: OrdersRepository ,val shopRepository: ShopRepository): RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>(){
 
     var orders = mutableListOf<Orders>()
         set(newValue) {
@@ -28,8 +30,12 @@ class OrdersAdapter (val navConteoller: NavController, val context: Context?, va
 
             with(holder.binding){
                 //txtDate.text =order.date    //Convert it into date
-                oderId.text =order.oderId.toString()
-                orderEmail.text=order.shop.email
+                oderId.text =order.id.toString()
+
+                val shop = ordersRepository.getShopByOrderId(order.id)
+
+                orderEmail.text =shop.email
+
                 txtPrice.text =order.price.toString()
                  //learn enum in database
                 when(order.status){

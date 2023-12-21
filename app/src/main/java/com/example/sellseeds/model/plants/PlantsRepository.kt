@@ -18,5 +18,5 @@ interface PlantsRepository {
 
     suspend fun getPlantById(id:Int): Seed?
 
-    suspend fun getPlantsByShopId(shop_id:Int):List<PlantDbEntity?>?
+    suspend fun getPlantsByShopId(shop_id:Int):List<Seed>?
 }

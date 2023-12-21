@@ -8,15 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 
 import com.example.sellseeds.R
+import com.example.sellseeds.ViewModelCreator
 import com.example.sellseeds.dataClass_enum.Converter
 import com.example.sellseeds.dataClass_enum.OrderStatus
 import com.example.sellseeds.dataClass_enum.Orders
 import com.example.sellseeds.databinding.ActivitySellerEditprofileOneBinding
 import com.example.sellseeds.databinding.ActivitySellerOrderBinding
 import com.example.sellseeds.fragments.Seller.AddProduct.ADD_PRODUCT_KEY
+import com.example.sellseeds.model.Repositories
+import com.example.sellseeds.viewModelCreator
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.Serializable
 
 /**
@@ -32,6 +38,8 @@ class Seller_OrderFragment : Fragment() {
 
 
 lateinit var binding:ActivitySellerEditprofileOneBinding
+val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepository)}
+    lateinit var order:Orders
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,13 +48,21 @@ lateinit var binding:ActivitySellerEditprofileOneBinding
         var orderId =binding.txt1087543245678
 
 
+
         if(arguments!=null){
 
             var quantity=binding.txtPrice
 
             val orderDetailwithUser =requireArguments().getSerializable("KEY") as OrderDetailwithUser
-            var order =orderDetailwithUser.order
-            orderId.text =order.oderId.toString()
+             order =orderDetailwithUser.order
+
+
+
+
+
+
+
+            orderId.text =order.id.toString()
 
             val a =order.price
             val b= quantity.text.toString().toInt()
@@ -73,12 +89,12 @@ lateinit var binding:ActivitySellerEditprofileOneBinding
             }
 
 
-            binding.txtEmail.text =order.buyer.email
-           binding.txt9187543245678.text =order.buyer.number
-            binding.txtLoremipsumdol.text =order.buyer.adress
-            binding.imagePlantOrderSeller.setImageResource(order.plant.images)
-            binding.txtMonsteraplants.text =order.plant.name
-            binding.txtPriceOne.text =order.plant.price.toString()
+            binding.txtEmail.text =order.buyer?.email
+           binding.txt9187543245678.text =order.buyer?.number
+            binding.txtLoremipsumdol.text =order.buyer?.adress
+            binding.imagePlantOrderSeller.setImageResource(order.plant?.images!!)
+            binding.txtMonsteraplants.text =order.plant?.name
+            binding.txtPriceOne.text =order.plant?.price.toString()
 
             binding.txt2042022.text =order.date.toString()
             when(order.status){
@@ -108,18 +124,20 @@ lateinit var binding:ActivitySellerEditprofileOneBinding
 
         binding.imagePlantOrderSeller.setImageResource(R.drawable.faux_palm_tree)
         binding.deliveryyy.setOnClickListener{
-            var arg =Bundle()
-            arg.putSerializable(BACK_FROM_ORDER ,ActionOrder(orderId.text.toString().toLong(), toDeliver = true))
+            order.status =OrderStatus.Completed
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.toDeliver(order)
+            }
 
-            setFragmentResult("KEY", arg)
 
             findNavController().navigateUp()
         }
         binding.cancelSellerOrder.setOnClickListener{
-            var arg =Bundle()
-            arg.putSerializable(BACK_FROM_ORDER ,ActionOrder(orderId.text.toString().toLong(), toCancel = true))
+            order.status =OrderStatus.Canceled
 
-            setFragmentResult("KEY", arg)
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.toDeliver(order)
+            }
 
             findNavController().navigateUp()
         }

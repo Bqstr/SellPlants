@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.sellseeds.R
+import com.example.sellseeds.adapters.OrdersAdapter
 import com.example.sellseeds.dataClass_enum.Category
 import com.example.sellseeds.dataClass_enum.Discount
 import com.example.sellseeds.dataClass_enum.OrderStatus
@@ -13,12 +14,13 @@ import com.example.sellseeds.dataClass_enum.Rating
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
 import com.example.sellseeds.dataClass_enum.User
+import com.example.sellseeds.model.orders.OrdersRepository
 import com.example.sellseeds.model.plants.PlantsRepository
 import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 import com.example.sellseeds.model.shop.ShopCurrentId
 import com.example.sellseeds.model.shop.ShopRepository
 
-class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepository: PlantsRepository ,val currentId: ShopCurrentId): ViewModel() {
+class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepository: PlantsRepository ,val currentId: ShopCurrentId ,val ordersRepository: OrdersRepository): ViewModel() {
 
     val shop_currentId =MutableLiveData<Int>()
     private var _orderList =MutableLiveData<MutableList<Orders>>()
@@ -43,6 +45,7 @@ class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepo
     val plantList=MutableLiveData<List<Seed>>()
 
 
+
     fun addProduct(product:Seed){
         if(productList.value!=null){
            val l =productList.value!!
@@ -54,6 +57,11 @@ class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepo
             list.add(product)
             _productList.postValue(list)
         }
+    }
+
+    suspend fun getAllMyOrders(){
+        _orderList.postValue(ordersRepository.getOrdersByShopId(currentId.getCurrentId())!!.toMutableList())
+
     }
     suspend fun getCurrentId(){
         Log.d("xzxzxzxzx" ,currentId.getCurrentId().toString())
@@ -68,7 +76,7 @@ class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepo
             plantList.postValue(mutableListOf())
         }
         else{
-            plantList.postValue(plantsRepository.getPlantsByShopId(currentId.getCurrentId())!!.map { PlantDbEntity ->PlantDbEntity!!.toSeed() })
+            plantList.postValue(plantsRepository.getPlantsByShopId(currentId.getCurrentId()))
         }
     }
 

@@ -1,5 +1,6 @@
 package com.example.sellseeds.model.plants
 
+import android.util.Log
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
 import com.example.sellseeds.model.plants.entenies.PlantDbEntity
@@ -36,12 +37,16 @@ class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurre
         return dao.getPlantById(id)!!.toSeed()
     }
 
-    override suspend  fun getPlantsByShopId(shop_id: Int): List<PlantDbEntity?>? {
-        if(dao.getPlantsByShopId(shop_id)==null){
+    override suspend  fun getPlantsByShopId(shop_id: Int): List<Seed>? {
+        val plants =dao.getPlantsByShopId(shop_id)
+        Log.d("1231232ddddddr",plants.toString())
+        Log.d("1231232ddddddr",shop_id.toString())
+
+        if(plants==null){
             return listOf()
         }
         else{
-            return dao.getPlantsByShopId(shop_id)
+            return plants.map { PlantDbEntity -> PlantDbEntity!!.toSeed() }
         }
     }
 

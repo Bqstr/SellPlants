@@ -21,6 +21,9 @@ interface UserDao {
     @Query("Select * from user where id =:id ")
     fun getUserById(id:Int):UserDbEntity?
 
+    @Query("SELECT * FROM user where email =:email")
+    fun getUserByEmail(email:String):UserDbEntity
+
 
 
 

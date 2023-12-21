@@ -16,8 +16,9 @@ class RoomUserRepository(val dao: UserDao, val userCurrentId: UserCurrentId) : U
 
 
     override suspend fun createUser(user: User) {
-        userCurrentId.setCurrentUserId(user.id)
         dao.createUser(UserDbEntity.fromUserSignUpData(user))
+        userCurrentId.setCurrentUserId(dao.getUserByEmail(user.email)!!.id)
+
         //Log.d("abioooobs","123123123123")
     }
 
@@ -55,6 +56,8 @@ class RoomUserRepository(val dao: UserDao, val userCurrentId: UserCurrentId) : U
     override suspend fun getUserById(id: Int): User {
         val us =dao.getUserById(id)
         if(us==null){
+            Log.d("2qwewq", dao.getUserById(id).toString())
+
             return dao.getUserById(id)!!.toUser()
 
         }

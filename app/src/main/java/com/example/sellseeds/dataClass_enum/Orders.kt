@@ -1,12 +1,17 @@
 package com.example.sellseeds.dataClass_enum
 
+import androidx.room.Ignore
 import java.io.Serializable
 
 
-data class Orders(val oderId:Int,
+data class Orders(val id:Int,
                   val price:Int,
-                  val plant: Seed,
+                  @Ignore
+                  val plant: Seed?,
                   val amount: Int,//
-                  val buyer: User,
-                  val shop : Shop,
-                  val status: OrderStatus, val date:Int, val adress:String): Serializable
+                  val plant_id:Int,
+                  val user_id:Int?,
+                  @Ignore
+                  val buyer: User?,
+
+                  var status: OrderStatus, val date:Int, val adress:String): Serializable

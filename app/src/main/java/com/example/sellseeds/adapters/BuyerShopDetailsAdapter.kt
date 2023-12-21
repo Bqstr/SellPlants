@@ -1,24 +1,37 @@
-package com.example.sellseeds
+package com.example.sellseeds.adapters
 
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.findViewTreeLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sellseeds.dataClass_enum.Converter
+import com.example.sellseeds.dataClass_enum.OrderStatus
+import com.example.sellseeds.dataClass_enum.Orders
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.databinding.AddToCartBinding
 import com.example.sellseeds.databinding.BuyerShopItemsBinding
+import com.example.sellseeds.model.Repositories
+import com.example.sellseeds.model.orders.OrdersRepository
+import com.example.sellseeds.model.user.UserCurrentId
+import com.example.sellseeds.model.user.UserRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class BuyerShopDetailsAdapter(
     val navConteoller: NavController, val context: Context?,
-    val layoutInflater: LayoutInflater): RecyclerView.Adapter<BuyerShopDetailsAdapter.BuyerShopDetailsViewHolder>(){
+    val layoutInflater: LayoutInflater,
+    val ordersRepository: OrdersRepository,
+    val currentUser_Id:UserCurrentId,
+    val userRepository: UserRepository
+): RecyclerView.Adapter<BuyerShopDetailsAdapter.BuyerShopDetailsViewHolder>(){
     val builder  = AlertDialog.Builder(context)
     var plants = mutableListOf<Seed>()
         set(newValue) {
@@ -37,7 +50,7 @@ class BuyerShopDetailsAdapter(
         val plant =plants[position]
         with(holder.binding){
 
-
+            txtMonsteraplantsOne.text =plant.name
             txtFlowerplantOne.text =Converter.CategorytoString(plant.category)//category
             txtPriceThree.text =plant.price.toString()//price
             imageRectangleTwelveOne.setImageResource(plant.images)   //image
@@ -95,7 +108,19 @@ class BuyerShopDetailsAdapter(
 
             binding.btnAddToCart.setOnClickListener{
                 //add to cart!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                alertDialog.cancel()
+                val lifecycleScope =
+                    holder.itemView.findViewTreeLifecycleOwner()!!.lifecycleScope
+                lifecycleScope.launch (Dispatchers.IO){
+                    val amount =binding.txtOne.text.toString().toInt()
+                    val total_price =binding.txtPriceNine.text.toString().toInt()
+                    val current_id1 =currentUser_Id.getCurrentUserId()
+                    val user =userRepository.getUserById(current_id1)
+                    ordersRepository.createOrder(Orders(0 ,total_price ,plant ,amount ,plant.id.toInt() ,current_id1 ,userRepository.getUserById(current_id1),OrderStatus.InProgress ,123123 ,user.adress))
+                    alertDialog.cancel()
+
+                }
+
+
             }
 
 

@@ -23,6 +23,7 @@ import com.example.sellseeds.dataClass_enum.User
 
 import com.example.sellseeds.databinding.ActivityBuyerHomepageBinding
 import com.example.sellseeds.model.Repositories
+import com.example.sellseeds.model.orders.OrdersRepository
 import com.example.sellseeds.viewModelCreator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +34,7 @@ class Buyer_HomePageFragment : Fragment() {
     lateinit var ordersAdapter: OrdersAdapter
     lateinit var binding: ActivityBuyerHomepageBinding
     var isShopsSelected:Boolean =true
-    val viewModel by viewModelCreator{BuyerHomePageViewModel(Repositories.shopRepository, Repositories.accountsRepository, Repositories.userCurrentId)  }
+    val viewModel by viewModelCreator{BuyerHomePageViewModel(Repositories.shopRepository, Repositories.accountsRepository, Repositories.userCurrentId ,Repositories.ordersRepository)  }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,8 +43,8 @@ class Buyer_HomePageFragment : Fragment() {
         binding = ActivityBuyerHomepageBinding.inflate(layoutInflater)
         val layoutManager= LinearLayoutManager(context)
 
-        shopAdapter = ShopsAdapter(findNavController(), context)
-        ordersAdapter = OrdersAdapter(findNavController(), context ,true)
+        shopAdapter = ShopsAdapter(findNavController(), context )
+        ordersAdapter = OrdersAdapter(findNavController(), context ,true,Repositories.ordersRepository ,Repositories.shopRepository)
         binding.abobus.adapter =shopAdapter
         binding.abobus.layoutManager =layoutManager
 
@@ -54,6 +55,7 @@ class Buyer_HomePageFragment : Fragment() {
             //viewModel.getUsers()
             viewModel.getAllShops()
             viewModel.getCurrentUser()
+            viewModel.getAllMyOrders()
         }
 
         viewModel.currentUser.observe(viewLifecycleOwner){
@@ -61,6 +63,12 @@ class Buyer_HomePageFragment : Fragment() {
             binding.txtEmailOne.text= it.email
 
         }
+
+
+
+
+
+
 
 
         binding.imageVectorFour.setOnClickListener {
@@ -79,6 +87,7 @@ class Buyer_HomePageFragment : Fragment() {
         }
         viewModel.orders.observe(viewLifecycleOwner) {
             ordersAdapter.orders = it
+
         }
         viewModel.isShopselected.observe(viewLifecycleOwner){
             isShopsSelected =it

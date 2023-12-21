@@ -3,6 +3,7 @@ package com.example.sellseeds.model.plants
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.sellseeds.model.orders.OrderDbEntity
 import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 
 @Dao
