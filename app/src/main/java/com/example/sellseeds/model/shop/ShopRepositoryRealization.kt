@@ -60,4 +60,19 @@ class ShopRepositoryRealization(val dao: ShopDao , val shopCurrentId:ShopCurrent
         return dao.getAll()!!.map { shopDbEntity -> shopDbEntity!!.toShop() }
     }
 
+    override suspend fun getShopsByName(): List<Shop> {
+        val sh = dao.getShopsByName() ?: return listOf()
+
+        return sh.map { ShopDbEntity -> ShopDbEntity.toShop() }
+
+
+    }
+
+    override suspend fun getShopsByName_decr(): List<Shop> {
+        val sh = dao.getShopsByName_decr() ?: return listOf()
+
+        return sh.map { ShopDbEntity -> ShopDbEntity.toShop() }
+
+    }
+
 }

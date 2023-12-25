@@ -25,4 +25,11 @@ interface ShopDao {
     @Query("Select * from shop ")
     fun getAll(): List<ShopDbEntity?>?
 
+    @Query("SELECT * FROM shop ORDER BY name ASC")
+    fun getShopsByName():List<ShopDbEntity>?
+    @Query("SELECT * FROM shop ORDER BY name DESC")
+    fun getShopsByName_decr():List<ShopDbEntity>?
+
+
+
 }

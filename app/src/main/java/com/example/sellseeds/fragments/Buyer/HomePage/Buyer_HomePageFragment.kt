@@ -1,29 +1,25 @@
 package com.example.sellseeds.fragments.Buyer.HomePage
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.sellseeds.adapters.OrdersAdapter
 import com.example.sellseeds.R
+import com.example.sellseeds.adapters.OrdersAdapter
 import com.example.sellseeds.adapters.ShopsAdapter
-import com.example.sellseeds.dataClass_enum.Category
-import com.example.sellseeds.dataClass_enum.Discount
-import com.example.sellseeds.dataClass_enum.OrderStatus
-import com.example.sellseeds.dataClass_enum.Orders
-import com.example.sellseeds.dataClass_enum.Rating
-import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
-import com.example.sellseeds.dataClass_enum.User
-
 import com.example.sellseeds.databinding.ActivityBuyerHomepageBinding
 import com.example.sellseeds.model.Repositories
-import com.example.sellseeds.model.orders.OrdersRepository
 import com.example.sellseeds.viewModelCreator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,25 +28,45 @@ import kotlinx.coroutines.launch
 class Buyer_HomePageFragment : Fragment() {
     lateinit var shopAdapter: ShopsAdapter
     lateinit var ordersAdapter: OrdersAdapter
+    var shop_sortState ="by_id"
+    var orders_sortState ="by_id"
+
     lateinit var binding: ActivityBuyerHomepageBinding
-    var isShopsSelected:Boolean =true
-    val viewModel by viewModelCreator{BuyerHomePageViewModel(Repositories.shopRepository, Repositories.accountsRepository, Repositories.userCurrentId ,Repositories.ordersRepository)  }
+    var isShopsSelected: Boolean = true
+    val viewModel by viewModelCreator {
+        BuyerHomePageViewModel(
+            Repositories.shopRepository,
+            Repositories.accountsRepository,
+            Repositories.userCurrentId,
+            Repositories.ordersRepository
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = ActivityBuyerHomepageBinding.inflate(layoutInflater)
-        val layoutManager= LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(context)
+        //lifecycleScope.launch(Dispatchers.IO) {
+        shopAdapter = ShopsAdapter(findNavController(), context)
+        ordersAdapter = OrdersAdapter(
+            findNavController(),
+            context,
+            true
+        )
+        viewModel.shopsAdapter.postValue(shopAdapter)
+        viewModel.ordersAdapter.postValue(ordersAdapter)
+        binding.abobus.adapter = shopAdapter
+        binding.abobus.layoutManager = layoutManager
+        shopsPressed()
 
-        shopAdapter = ShopsAdapter(findNavController(), context )
-        ordersAdapter = OrdersAdapter(findNavController(), context ,true,Repositories.ordersRepository ,Repositories.shopRepository)
-        binding.abobus.adapter =shopAdapter
-        binding.abobus.layoutManager =layoutManager
+        //  }
+
 
         //shopAdapter.shops = mutableListOf(createSellerData())
         //ordersAdapter.orders =createOrderData()
-        shopsPressed()
         lifecycleScope.launch(Dispatchers.IO) {
             //viewModel.getUsers()
             viewModel.getAllShops()
@@ -58,9 +74,9 @@ class Buyer_HomePageFragment : Fragment() {
             viewModel.getAllMyOrders()
         }
 
-        viewModel.currentUser.observe(viewLifecycleOwner){
-            binding.txtRavijaganiOne.text= it.name
-            binding.txtEmailOne.text= it.email
+        viewModel.currentUser.observe(viewLifecycleOwner) {
+            binding.txtRavijaganiOne.text = it.name
+            binding.txtEmailOne.text = it.email
 
         }
 
@@ -74,47 +90,161 @@ class Buyer_HomePageFragment : Fragment() {
         binding.imageVectorFour.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
 
-          viewModel.userId.postValue(viewModel.getCurrentId())
-            //viewModel.getUsers()
+                viewModel.userId.postValue(viewModel.getCurrentId())
+                //viewModel.getUsers()
+            }
         }
-        }
+
 
 
 
 
         viewModel.shops.observe(viewLifecycleOwner) {
+            Log.d("whattt", it.toString())
+
             shopAdapter.shops = it
+            shopAdapter.notifyDataSetChanged()
         }
         viewModel.orders.observe(viewLifecycleOwner) {
+            Log.d("whattt", it.toString())
             ordersAdapter.orders = it
+            ordersAdapter.notifyDataSetChanged()
 
         }
-        viewModel.isShopselected.observe(viewLifecycleOwner){
-            isShopsSelected =it
+        viewModel.isShopselected.observe(viewLifecycleOwner) {
+            isShopsSelected = it
         }
-        binding.btnShopsOne.setOnClickListener{
-            if(!isShopsSelected) {
+        binding.btnShopsOne.setOnClickListener {
+            if (!isShopsSelected) {
                 shopsPressed()
             }
         }
-        binding.btnOOrders.setOnClickListener{
-            if(isShopsSelected){
+        binding.btnOOrders.setOnClickListener {
+            if (isShopsSelected) {
                 ordersPressed()
             }
         }
-    viewModel.userId.observe(viewLifecycleOwner){
 
-        //viewModel.userCurrentId.getCurrentUserId()
-        Log.d("asasasasasas", it.toString())
+        viewModel.userId.observe(viewLifecycleOwner) {
 
-        //Toast.makeText(context , "$it <-  eto" , Toast.LENGTH_LONG).show()
+            //viewModel.userCurrentId.getCurrentUserId()
+            Log.d("asasasasasas", it.toString())
 
-    }
-        viewModel.userList.observe(viewLifecycleOwner){
-            for(a in 0 until it.size){
-                Log.d("aaaaaaaaaaaaaaaaaaa","${it[a].id}   ${it[a].email}  ${it[a].password}")
+            //Toast.makeText(context , "$it <-  eto" , Toast.LENGTH_LONG).show()
+
+        }
+        viewModel.userList.observe(viewLifecycleOwner) {
+            for (a in 0 until it.size) {
+                Log.d("aaaaaaaaaaaaaaaaaaa", "${it[a].id}   ${it[a].email}  ${it[a].password}")
             }
         }
+
+        val searchView =binding.etGroupTwentyThree as EditText
+       // searchView.setOnQueryTextListener(this@Buyer_HomePageFragment)
+        searchView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // This method is called before the text is changed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val newText = s.toString()
+                if(newText.isNotBlank()){
+                    onChange(newText)
+
+                }
+                else{
+
+                    if(shop_sortState=="by_id"){
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getShopsByName()
+                        }
+                    }
+                    else if(shop_sortState=="by_name_incr"){
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getShopsByName_decr()
+                        }
+                    }
+                    else{
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getAllShops()
+                        }
+                    }
+                }
+
+
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // This method is called after the text has been changed
+            }
+        })
+        binding.btnGroupTwelve.setOnClickListener {
+            if(isShopsSelected) {
+                when (shop_sortState) {
+                    "by_id" -> {
+                        Toast.makeText(context, "by_name_incr", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getShopsByName()
+                        }
+                        shop_sortState = "by_name_incr"
+
+                    }
+
+                    "by_name_incr" -> {
+                        Toast.makeText(context, "by_name_dcr", Toast.LENGTH_SHORT).show()
+
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getShopsByName_decr()
+                        }
+                        shop_sortState = "by_name_dcr"
+
+
+                    }
+
+                    "by_name_dcr" -> {
+                        Toast.makeText(context, "by_id", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getAllShops()
+                        }
+                        shop_sortState = "by_id"
+                    }
+
+                }
+            }
+            else {
+                when (orders_sortState) {
+                    "by_id" -> {
+                        Toast.makeText(context, "by_category_from_big", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch (Dispatchers.IO){
+                            viewModel.getOrdersbyOrderStatus(viewModel.currentUser.value!!.id)
+                        }
+                        orders_sortState ="by_category_from_big"
+
+                    }
+                    "by_category_from_big" -> {
+                        Toast.makeText(context, "by_category_from_small", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch (Dispatchers.IO){
+                            viewModel.getOrdersbyOrderStatus_decr(viewModel.currentUser.value!!.id)
+                        }
+                        orders_sortState ="by_category_from_small"
+
+                    }
+
+                    "by_category_from_small" -> {
+                        Toast.makeText(context, "by_id", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch (Dispatchers.IO){
+                            viewModel.getAllMyOrders()
+                        }
+                        orders_sortState ="by_id"
+
+
+                    }
+                }
+            }
+        }
+
+
 
 
 
@@ -123,26 +253,46 @@ class Buyer_HomePageFragment : Fragment() {
         return binding.root
     }
 
+
     private fun ordersPressed() {
 
-        binding.abobus.adapter =ordersAdapter
-        val layoutManager= LinearLayoutManager(context)
+             binding.abobus.adapter = ordersAdapter
 
-        binding.abobus.layoutManager =layoutManager
+
+        val layoutManager = LinearLayoutManager(context)
+
+        binding.abobus.layoutManager = layoutManager
         viewModel.isShopselected.postValue(false)
+
+
+
+
 
         binding.btnShopsOne.setBackgroundColor(getResources().getColor(R.color.white))
         binding.btnOOrders.setBackgroundColor(getResources().getColor(R.color.light_green_800))
+}
 
-    }
+
+
+
 
     private fun shopsPressed() {
 
-        binding.abobus.adapter =shopAdapter
-        val layoutManager= LinearLayoutManager(context)
 
-        binding.abobus.layoutManager =layoutManager
-        viewModel.isShopselected.postValue(true)
+
+
+                binding.abobus.adapter = shopAdapter
+
+
+
+
+
+                val layoutManager = LinearLayoutManager(context)
+
+                binding.abobus.layoutManager = layoutManager
+                viewModel.isShopselected.postValue(true)
+
+
 
         binding.btnShopsOne.setBackgroundColor(getResources().getColor(R.color.light_green_800))
         binding.btnOOrders.setBackgroundColor(getResources().getColor(R.color.white))
@@ -150,146 +300,30 @@ class Buyer_HomePageFragment : Fragment() {
 
 
 
-    }
-//    private fun createSellerData(): Shop {
-//        return (Shop(
-//            0,
-//            "Hydra",
-//            "3_head_gydra@gmai.com",
-//            "jail",
-//            "+666",
-//            createData(),
-//            createOrderData(),
-//            R.drawable.img_rectangle19,
-//            Rating.FIVE_STAR,
-//            100,"13"
-//        ))
-//    }
 
-//
-//    private fun createData(): MutableList<Seed> {
-//        val mutableList = mutableListOf<Seed>(
-//            Seed(
-//                0,
-//                "Olive Tree",
-//                "description",
-//                1000,
-//                listOf(R.drawable.img_rectangle12),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                1,
-//                "Money Tree",
-//                "description",
-//                2000,
-//                listOf(R.drawable.img_rectangle12_1),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                2,
-//                "Faux Palm Tree",
-//                "description",
-//                3000,
-//                listOf(R.drawable.img_rectangle12_108x110),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                3,
-//                "Kek Tree",
-//                "description",
-//                999,
-//                listOf(R.drawable.img_rectangle12_2),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                0,
-//                "Olive Tree",
-//                "description",
-//                1000,
-//                listOf(R.drawable.img_rectangle12),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                2,
-//                "Faux Palm Tree",
-//                "description",
-//                3000,
-//                listOf(R.drawable.img_rectangle12_108x110),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//
-//
-//            )
-//        return mutableList
-//
-//    }
-//
-//    fun createOrderData(): MutableList<Orders> {
-//        val examplePlant = Seed(
-//            0,
-//            "Olive Tree",
-//            "description",
-//            1000,
-//            listOf(R.drawable.img_rectangle12),
-//            Category.SmallPlant,
-//            1,
-//            Discount(true, 0.2)
-//        )
-//        val exampleShop = Shop(0,"1","123","123","123",createData() , mutableListOf(),R.drawable.img_rectangle19 , Rating.FOUR_STAR ,100,"123")
-//        val exampleUser =
-//            User(0, "USER_NAME", "email_user@gmail.com", "USER_ADRESS", "+777777777777777", mutableListOf<Orders>(),"123")
-//
-//        var mut = mutableListOf(
-//            Orders(
-//                123,
-//                1000,
-//                examplePlant,
-//                10,
-//                adress = "ADRESS",
-//                shop = exampleShop,
-//                buyer = exampleUser,
-//                date = 12312,
-//                status = OrderStatus.InProgress
-//            ),
-//            Orders(
-//                124,
-//                2000,
-//                examplePlant,
-//                20,
-//                adress = "ADRESS",
-//                shop = exampleShop,
-//                buyer = exampleUser,
-//                date = 12312123,
-//                status = OrderStatus.Completed
-//            ),
-//
-//            Orders(
-//                125,
-//                6000,
-//                examplePlant,
-//                10,
-//                adress = "ADRESS",
-//                shop = exampleShop,
-//                buyer = exampleUser,
-//                date = 12312,
-//                status = OrderStatus.Canceled
-//            )
-//        )
-//
-//        return mut
-//    }
+
+
+
+    }
+
+
+
+     fun onChange(txt: String?) {
+        val shopList =viewModel.shops.value
+         val newList = mutableListOf<Shop>()
+        if(txt!=null && shopList!=null){
+            for(a in 0 until shopList.size){
+                if(shopList.get(a).name.contains(txt)){
+                    newList.add(shopList.get(a))
+                }
+            }
+            viewModel.shops.postValue(newList)
+
+
+
+        }
+
+    }
 
 
 }

@@ -23,6 +23,7 @@ import com.example.sellseeds.model.user.UserCurrentId
 import com.example.sellseeds.model.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
 
 
 class BuyerShopDetailsAdapter(
@@ -37,6 +38,7 @@ class BuyerShopDetailsAdapter(
         set(newValue) {
             field = newValue
             notifyDataSetChanged()
+
         }
 
 
@@ -115,7 +117,10 @@ class BuyerShopDetailsAdapter(
                     val total_price =binding.txtPriceNine.text.toString().toInt()
                     val current_id1 =currentUser_Id.getCurrentUserId()
                     val user =userRepository.getUserById(current_id1)
-                    ordersRepository.createOrder(Orders(0 ,total_price ,plant ,amount ,plant.id.toInt() ,current_id1 ,userRepository.getUserById(current_id1),OrderStatus.InProgress ,123123 ,user.adress))
+                    val currentDate =Date()
+                    val currentTime =currentDate.time / 1000
+                    ordersRepository.createOrder(Orders(0 ,total_price ,plant ,amount ,plant.id.toInt() ,current_id1 ,userRepository.getUserById(current_id1),OrderStatus.InProgress ,
+                        currentTime.toString().toInt() ,user.adress))
                     alertDialog.cancel()
 
                 }

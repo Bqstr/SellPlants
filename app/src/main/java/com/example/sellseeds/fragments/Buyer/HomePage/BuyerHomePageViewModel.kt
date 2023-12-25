@@ -3,6 +3,8 @@ package com.example.sellseeds.fragments.Buyer.HomePage
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.sellseeds.adapters.OrdersAdapter
+import com.example.sellseeds.adapters.ShopsAdapter
 import com.example.sellseeds.dataClass_enum.Orders
 import com.example.sellseeds.dataClass_enum.Shop
 import com.example.sellseeds.dataClass_enum.User
@@ -15,6 +17,9 @@ class BuyerHomePageViewModel(val shopRepository:ShopRepository, val userReposito
     val userId =MutableLiveData<Int>()
     val userList = MutableLiveData<List<User>>()
     val currentUser =MutableLiveData<User>()
+
+    val shopsAdapter =MutableLiveData<ShopsAdapter>()
+    val ordersAdapter =MutableLiveData<OrdersAdapter>()
     suspend fun getCurrentId():Int{
         return userCurrentId.getCurrentUserId()
     }
@@ -35,7 +40,23 @@ class BuyerHomePageViewModel(val shopRepository:ShopRepository, val userReposito
     val orders =MutableLiveData<MutableList<Orders>>()
     val isShopselected =MutableLiveData<Boolean>()
 
+    suspend fun getShopsByName(){
+        shops.postValue(shopRepository.getShopsByName().toMutableList())
+    }
+    suspend fun getShopsByName_decr(){
+        shops.postValue(shopRepository.getShopsByName_decr().toMutableList())
+    }
+
+    suspend fun getOrdersbyOrderStatus(userId:Int){
+        orders.postValue(ordersRepository.getOrdersbyOrderStatus(userId).toMutableList())
+    }
+
+    suspend fun getOrdersbyOrderStatus_decr(userId:Int) {
+        orders.postValue(ordersRepository.getOrdersbyOrderStatus_decr(userId).toMutableList())
+
+    }
+    }
 
 
 
-}
+

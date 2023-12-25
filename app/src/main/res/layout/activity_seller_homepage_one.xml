@@ -55,7 +55,7 @@
                     <FrameLayout
                         android:id="@+id/frameStackstar"
                         android:layout_width="@dimen/_209pxh"
-                        android:layout_height="@dimen/_72pxv"
+                        android:layout_height="85dp"
                         android:layout_marginStart="@dimen/_10pxh"
                         android:layout_marginTop="@dimen/_1pxv">
 

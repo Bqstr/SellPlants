@@ -12,11 +12,14 @@ import com.example.sellseeds.dataClass_enum.OrderStatus
 import com.example.sellseeds.dataClass_enum.Orders
 import com.example.sellseeds.databinding.OrderItemBinding
 import com.example.sellseeds.fragments.Seller.OrderFragment.OrderDetailwithUser
+import com.example.sellseeds.model.Repositories
 import com.example.sellseeds.model.orders.OrdersRepository
 import com.example.sellseeds.model.shop.ShopRepository
+import java.util.Date
 
-class OrdersAdapter (val navConteoller: NavController, val context: Context?, var isBuyer:Boolean ,val ordersRepository: OrdersRepository ,val shopRepository: ShopRepository): RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>(){
-
+class OrdersAdapter (val navConteoller: NavController, val context: Context?, var isBuyer:Boolean ,  ): RecyclerView.Adapter<OrdersAdapter.OrderViewHolder>(){
+   // val ordersRepository =Repositories.ordersRepository
+    //val shopRepository =Repositories.shopRepository
     var orders = mutableListOf<Orders>()
         set(newValue) {
             field = newValue
@@ -30,11 +33,14 @@ class OrdersAdapter (val navConteoller: NavController, val context: Context?, va
 
             with(holder.binding){
                 //txtDate.text =order.date    //Convert it into date
+                val dd = Date(order.date.toLong() * 1000)
+
+                txtDate.text =dd.toString()
                 oderId.text =order.id.toString()
 
-                val shop = ordersRepository.getShopByOrderId(order.id)
+              //  val shop = ordersRepository.getShopByOrderId(order.id)
 
-                orderEmail.text =shop.email
+              //  orderEmail.text =shop.email
 
                 txtPrice.text =order.price.toString()
                  //learn enum in database

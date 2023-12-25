@@ -68,10 +68,9 @@ android:layout_marginBottom="10dp"
 
         <LinearLayout
             android:id="@+id/linearColumndate"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_1pxv"
-            android:layout_weight="0.23"
             android:gravity="start"
             android:orientation="vertical">
 

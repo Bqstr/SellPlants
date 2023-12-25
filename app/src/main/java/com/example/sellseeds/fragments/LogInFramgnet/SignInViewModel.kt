@@ -17,7 +17,7 @@ class SignInViewModel(
 
     ):ViewModel() {
 
-val navigateToMain = MutableLiveData<Boolean>()
+val navigateToMain = MutableLiveData<Boolean?>()
     val userData= MutableLiveData<List<UserDbEntity>>()
 
     //val getAllData:LiveData<List<UserDbEntity>>

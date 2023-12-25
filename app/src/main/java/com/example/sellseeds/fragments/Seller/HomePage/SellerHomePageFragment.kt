@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.clearFragmentResult
 import androidx.fragment.app.setFragmentResultListener
@@ -44,6 +45,9 @@ val viewModel by viewModelCreator { SellerHomePageViewModel(Repositories.shopRep
 var isProductPressed =true
     lateinit var productAdapter: SeedsAdapter
     lateinit var orderAdapter: OrdersAdapter
+
+    val sortStates = listOf("by_id","by_name_inr" ,"by_name_dcr" )
+    val sortState ="by_id"
 init {
     //intialize all data from database
 
@@ -55,23 +59,35 @@ init {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding =ActivitySellerHomepageOneBinding.inflate(layoutInflater)
+
+
 
 
         productAdapter = SeedsAdapter(findNavController(), context, layoutInflater)
 
-         orderAdapter = OrdersAdapter(findNavController(),context, false ,Repositories.ordersRepository ,Repositories.shopRepository)
+         orderAdapter = OrdersAdapter(findNavController(),context, false )
 
 
         viewModel.shop_currentId.observe(viewLifecycleOwner){
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.getShopbyId(it)
+            }
+
             Log.d("xzxzxzxzx" ,it.toString())
 
+        }
+        viewModel.currentShop.observe(viewLifecycleOwner){
+
+            binding.sellerName.text =it.name
+            binding.txtEmail.text =it.email
         }
 
 
             lifecycleScope.launch (Dispatchers.IO){
                 viewModel.getCurrentId()
-                viewModel
+
             }
         if(arguments!=null){
             Log.d("111111111111111111","not null  ")
@@ -93,6 +109,9 @@ init {
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.getAllMyPlants()
         }
+        lifecycleScope.launch(Dispatchers.IO) {
+            viewModel.getAllMyOrders()
+        }
         viewModel.plantList.observe(viewLifecycleOwner) {
 
             productAdapter.seeds =it.toMutableList()
@@ -101,10 +120,13 @@ init {
         }
 
         viewModel.orderList.observe(viewLifecycleOwner){
-
+            Log.d("11123s",it.toString())
             orderAdapter.orders =it
             orderAdapter.notifyDataSetChanged()
         }
+
+
+
 
 
 
@@ -209,7 +231,6 @@ init {
         val layoutManager =LinearLayoutManager(context)
         binding.sellerHomePageRecyclerView.layoutManager =layoutManager
 //
-
 
 
 

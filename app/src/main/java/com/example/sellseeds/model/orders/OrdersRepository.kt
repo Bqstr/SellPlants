@@ -4,25 +4,39 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.sellseeds.dataClass_enum.Orders
+import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
+import com.example.sellseeds.dataClass_enum.User
+import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 import com.example.sellseeds.model.shop.entities.ShopDbEntity
+import com.example.sellseeds.model.user.entities.UserDbEntity
 
 interface OrdersRepository {
 
-    fun getAllOrders():List<Orders>?
+    suspend fun getAllOrders():List<Orders>?
 
-    fun getOrderById(id:Int):Orders
+    suspend fun getOrderById(id:Int):Orders
 
-    fun createOrder(orders: Orders)
+    suspend fun createOrder(orders: Orders)
 
-    fun updateOrder(orders: Orders)
+    suspend fun updateOrder(orders: Orders)
 
 //    @Query("Select * from orders where ")
 //    fun getOrdersByShopId(id:Int):List<OrderDbEntity?>?
 
-    fun getOrdersByUserId(userId:Int):List<Orders>
+    suspend fun getOrdersByUserId(userId:Int):List<Orders>
 
-    fun getOrdersByShopId(shop_id1:Int):List<Orders>?
+    suspend fun getOrdersByShopId(shop_id1:Int):List<Orders>?
 
-    fun getShopByOrderId(orderId:Int): Shop
+    suspend fun getShopByOrderId(orderId:Int): Shop
+
+
+
+
+    suspend fun getUserByOrderId(orderID:Int): User
+    suspend fun getPlantByOrderId(orderID:Int): Seed
+
+    suspend fun getOrdersbyOrderStatus(userId:Int):List<Orders>
+
+    suspend fun getOrdersbyOrderStatus_decr(userId:Int):List<Orders>
 }

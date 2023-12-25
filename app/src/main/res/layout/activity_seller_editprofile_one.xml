@@ -204,10 +204,10 @@
             <TextView android:ellipsize="end"
                 android:id="@+id/txtAmount"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.62" android:layout_width="0dp"
+                android:layout_weight="0.62" android:layout_width="wrap_content"
                 android:singleLine="true"
-                android:text="@string/lbl_amount"
-                style="@style/txtSFProTextsemibold18_2" tools:text="@string/lbl_amount"/>
+                android:text="how meny buyed"
+                style="@style/txtSFProTextsemibold18_2" tools:text="how meny buyed"/>
             <TextView android:ellipsize="end" android:id="@+id/txtPrice"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_1pxv"

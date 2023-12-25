@@ -24,6 +24,7 @@ import com.example.sellseeds.viewModelCreator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.Serializable
+import java.util.Date
 
 /**
  * A simple [Fragment] subclass.
@@ -38,7 +39,7 @@ class Seller_OrderFragment : Fragment() {
 
 
 lateinit var binding:ActivitySellerEditprofileOneBinding
-val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepository)}
+val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepository ,Repositories.shopRepository ,Repositories.accountsRepository)}
     lateinit var order:Orders
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +56,15 @@ val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepos
 
             val orderDetailwithUser =requireArguments().getSerializable("KEY") as OrderDetailwithUser
              order =orderDetailwithUser.order
+            binding.txtPriceTwo.text =order.price.toString()
+            lifecycleScope.launch(Dispatchers.IO) {
+                viewModel.getPlantByOrderId(order.id)
+                viewModel.getUserByOrderId(order.id)
+                viewModel.getShopByOrder(order)
+
+            }
+
+
 
 
 
@@ -67,9 +77,10 @@ val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepos
             val a =order.price
             val b= quantity.text.toString().toInt()
             Log.d("1fldvsdovndv" ,"$a $b")
-            binding.txtPriceTwo.text ="total:${a*b}"
+            binding.txtPriceTwo.text =order.price.toString()
 
             binding.txtPriceOne.text =a.toString()
+
 
 
 
@@ -89,14 +100,17 @@ val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepos
             }
 
 
-            binding.txtEmail.text =order.buyer?.email
+
            binding.txt9187543245678.text =order.buyer?.number
             binding.txtLoremipsumdol.text =order.buyer?.adress
-            binding.imagePlantOrderSeller.setImageResource(order.plant?.images!!)
+           // binding.imagePlantOrderSeller.setImageResource(order.plant?.images!!)
             binding.txtMonsteraplants.text =order.plant?.name
             binding.txtPriceOne.text =order.plant?.price.toString()
 
-            binding.txt2042022.text =order.date.toString()
+
+
+            val dd = Date(order.date.toLong() * 1000)
+            binding.txt2042022.text =dd.toString()
             when(order.status){
                 OrderStatus.Canceled -> binding.txtCompleted.setTextColor(getResources().getColor(R.color.red))
                 OrderStatus.InProgress -> binding.txtCompleted.setTextColor(getResources().getColor(R.color.black))
@@ -140,6 +154,25 @@ val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepos
             }
 
             findNavController().navigateUp()
+        }
+
+        viewModel.user.observe(viewLifecycleOwner){
+
+            Log.d("2223212","${it.toString()}")
+            binding.txtEmail.text =it.email
+            binding.txt9187543245678.text =it.number
+            binding.txtLoremipsumdol.text =it.adress
+        }
+        viewModel.shop.observe(viewLifecycleOwner){
+        }
+        viewModel.plant.observe(viewLifecycleOwner){
+
+            binding.txtMonsteraplants.text =it.name
+            binding.txtPriceOne.text =it.price.toString()
+
+            binding.imagePlantOrderSeller.setImageResource(it.images)
+
+
         }
 
 

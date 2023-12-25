@@ -66,14 +66,19 @@ lateinit var binding:ActivityLoginBinding
 
         viewModel.navigateToMain.observe(viewLifecycleOwner){
             Log.d("dhhdhdhdhd","in observer")
-            if(it){
-                findNavController().navigate(R.id.action_signInFragment_to_buyer_HomePageFragment)
+            if(it==null){}
+            else {
+                if (it) {
+                    viewModel.navigateToMain.postValue(null)
+                    findNavController().navigate(R.id.action_signInFragment_to_buyer_HomePageFragment)
 
-            }
-            else{
-                findNavController().navigate(R.id.action_signInFragment_to_sellerHomePageFragment)
+                } else {
+                    viewModel.navigateToMain.postValue(null)
+
+                    findNavController().navigate(R.id.action_signInFragment_to_sellerHomePageFragment)
 
 
+                }
             }
         }
         lifecycleScope.launch(Dispatchers.IO){
@@ -94,25 +99,7 @@ lateinit var binding:ActivityLoginBinding
             }
 
 
-            //TO-DO  check for in database
 
-            val isInDatabse =true
-            val isSeller =false
-
-
-//            if(isInDatabse==true ){
-//               // (requireActivity() as MainActivity).binding.bottomNavigationView.visibility=View.VISIBLE
-//
-//                if(isSeller==true){
-//
-//                    findNavController().navigate(R.id.action_signInFragment_to_sellerHomePageFragment)
-//
-//                }
-//                else{
-//                    findNavController().navigate(R.id.action_signInFragment_to_buyer_HomePageFragment)
-//
-//                }
-//            }
 
 
 
@@ -121,12 +108,12 @@ lateinit var binding:ActivityLoginBinding
         }
         binding.registerAsShop.setOnClickListener{
 
-            findNavController().navigate(R.id.action_signInFragment_to_registerSellerFragment)
+           // findNavController().navigate(R.id.action_signInFragment_to_registerSellerFragment)
         }
         binding.registerAsUser.setOnClickListener{
 
 
-            findNavController().navigate(R.id.action_signInFragment_to_registerUserFragment)
+           // findNavController().navigate(R.id.action_signInFragment_to_registerUserFragment)
         }
             return binding.root
 

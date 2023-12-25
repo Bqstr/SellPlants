@@ -22,9 +22,12 @@ import com.example.sellseeds.model.shop.ShopRepository
 
 class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepository: PlantsRepository ,val currentId: ShopCurrentId ,val ordersRepository: OrdersRepository): ViewModel() {
 
+    val sortState = MutableLiveData<String>()
     val shop_currentId =MutableLiveData<Int>()
     private var _orderList =MutableLiveData<MutableList<Orders>>()
     var orderList :LiveData<MutableList<Orders>> =_orderList
+
+    val currentShop =MutableLiveData<Shop>()
 
 
     private var _productList =MutableLiveData<MutableList<Seed>>()
@@ -69,6 +72,13 @@ class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepo
         shop_currentId.postValue(currentId.getCurrentId())
     }
 
+    suspend fun getAllOrders():List<Orders>{
+        val s =ordersRepository.getAllOrders()
+        if(s==null){
+            return listOf()
+        }
+       return ordersRepository.getAllOrders()!!
+    }
     suspend fun getAllMyPlants(){
         Log.d("1111111111111",plantsRepository.getPlantsByShopId(currentId.getCurrentId()).toString())
 
@@ -79,10 +89,16 @@ class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepo
             plantList.postValue(plantsRepository.getPlantsByShopId(currentId.getCurrentId()))
         }
     }
+    suspend fun getShopbyId(id:Int){
+           currentShop.postValue(shopRepository.getShopById(id))
+    }
 
     fun changeAdapter(b:Boolean){
         _isProductPressed.postValue(b)
     }
+
+
+
 //
 //    private fun createSellerData(): Shop {
 //        return (Shop(
