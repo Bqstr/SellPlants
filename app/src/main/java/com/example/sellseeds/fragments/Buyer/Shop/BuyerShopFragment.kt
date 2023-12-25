@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.helper.widget.Carousel.Adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,6 +31,7 @@ import kotlinx.coroutines.launch
  * create an instance of this fragment.
  */
 class BuyerShopFragment : Fragment() {
+    var plantsSortState ="by_id"
 lateinit var adapter:BuyerShopDetailsAdapter
 lateinit var binding:ActivityShopBinding
 val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId ,Repositories.plantsRepository ,Repositories.shopRepository) }
@@ -88,78 +90,52 @@ val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId
             //when pressed change it's will sort by those and write by Toast Messages about it
 
         }
-        // Inflate the layout for this fragment
+        viewModel.plantsSortState.observe(viewLifecycleOwner){
+            plantsSortState =it
+        }
+
+
+        binding.btnGroupTwelve.setOnClickListener {
+                when (plantsSortState) {
+                    "by_id" -> {
+                        Toast.makeText(context, "by_name_incr", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getPlantsByCatefory_incr()
+                        }
+                        viewModel.plantsSortState.postValue("by_name_incr")
+
+
+
+                    }
+
+                    "by_name_incr" -> {
+                        Toast.makeText(context, "by_name_dcr", Toast.LENGTH_SHORT).show()
+
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getPlantsByName_decr()
+                        }
+                        viewModel.plantsSortState.postValue("by_name_dcr")
+
+
+
+                    }
+
+                    "by_name_dcr" -> {
+                        Toast.makeText(context, "by_id", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getAllMyPlants()
+                        }
+                        viewModel.plantsSortState.postValue("by_id")
+
+                    }
+
+                }
+            }
+
+
+
             return binding.root
     }
 
-//
-//    private fun createData(): MutableList<Seed> {
-//        val mutableList = mutableListOf<Seed>(
-//            Seed(
-//                0,
-//                "Olive Tree",
-//                "description",
-//                1000,
-//                listOf(R.drawable.img_rectangle12),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                1,
-//                "Money Tree",
-//                "description",
-//                2000,
-//                listOf(R.drawable.img_rectangle12_1),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                2,
-//                "Faux Palm Tree",
-//                "description",
-//                3000,
-//                listOf(R.drawable.img_rectangle12_108x110),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                3,
-//                "Kek Tree",
-//                "description",
-//                999,
-//                listOf(R.drawable.img_rectangle12_2),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                0,
-//                "Olive Tree",
-//                "description",
-//                1000,
-//                listOf(R.drawable.img_rectangle12),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                2,
-//                "Faux Palm Tree",
-//                "description",
-//                3000,
-//                listOf(R.drawable.img_rectangle12_108x110),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//
-//
-//            )
-//        return mutableList
-//
-//    }
 
 }

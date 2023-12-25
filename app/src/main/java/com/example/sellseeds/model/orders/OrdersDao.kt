@@ -43,6 +43,13 @@ interface OrdersDao {
     fun getOrdersbyOrderStatus_decr(userId:Int):List<OrderDbEntity>?
 
 
+    @Query("SELECT Orders.* FROM Orders JOIN plant ON Orders.plant_id = plant.id WHERE plant.shop_id = :shopId ORDER BY Orders.id ASC;")
+    fun getOrdersbyOrderStatus_byShopID(shopId:Int):List<OrderDbEntity>?
+
+    @Query("SELECT Orders.* FROM Orders JOIN plant ON Orders.plant_id = plant.id WHERE plant.shop_id = :shopId ORDER BY Orders.id DESC;")
+    fun getOrdersbyOrderStatus_byShopId_decr(shopId:Int):List<OrderDbEntity>?
+
+
 
 
 

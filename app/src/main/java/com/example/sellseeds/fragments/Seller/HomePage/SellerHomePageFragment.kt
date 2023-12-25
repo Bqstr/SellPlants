@@ -1,15 +1,19 @@
 package com.example.sellseeds.fragments.Seller.HomePage
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.clearFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,8 +50,11 @@ var isProductPressed =true
     lateinit var productAdapter: SeedsAdapter
     lateinit var orderAdapter: OrdersAdapter
 
-    val sortStates = listOf("by_id","by_name_inr" ,"by_name_dcr" )
-    val sortState ="by_id"
+     var currentId =-1
+
+
+    var plantsSortState ="by_id"
+    var ordersSortState ="by_id"
 init {
     //intialize all data from database
 
@@ -67,7 +74,7 @@ init {
 
         productAdapter = SeedsAdapter(findNavController(), context, layoutInflater)
 
-         orderAdapter = OrdersAdapter(findNavController(),context, false )
+         orderAdapter = OrdersAdapter(findNavController(),requireContext(), false )
 
 
         viewModel.shop_currentId.observe(viewLifecycleOwner){
@@ -124,36 +131,11 @@ init {
             orderAdapter.orders =it
             orderAdapter.notifyDataSetChanged()
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-        setFragmentResultListener("KEY") { key, bundle ->
-            Log.d("123123123123123", key)
-
-            if(bundle.getSerializable(ADD_PRODUCT_KEY)!=null){
-                val result=bundle.getSerializable(ADD_PRODUCT_KEY) as Seed
-                viewModel.addProduct(result)
-            }
-            Log.d("111111111111111111","123123123123")
-
-            if(bundle.getSerializable(BACK_FROM_ORDER)!=null){
-                val actionOrder =bundle?.getSerializable(BACK_FROM_ORDER) as ActionOrder
-                Log.d("111111111111111111","${actionOrder.orderId.toString()}   ${actionOrder.toDeliver}    ")
-            }
-
-
-            clearFragmentResult("key")
-
+        viewModel.plantsSortState.observe(viewLifecycleOwner) {
+            plantsSortState =it
+        }
+        viewModel.ordersSortState.observe(viewLifecycleOwner) {
+            ordersSortState =it
         }
 
 
@@ -162,14 +144,62 @@ init {
 
 
 
-        binding.myaccountBtn.setOnClickListener{
-            val arg =Bundle()
-           // arg.putSerializable(GO_SELLER_EDITPROFILE , createSellerData())
-           // arg.putSerializable("12323")  Pass Seller Infomration
 
 
-            findNavController().navigate(R.id.action_sellerHomePageFragment_to_seller_EditProfileFragment)
-        }
+        val searchView =binding.etGroupTwentyThree as EditText
+        searchView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // This method is called before the text is changed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val newText = s.toString()
+                if (newText.isNotBlank()) {
+                    onChange(newText)
+
+                } else {
+                    if(plantsSortState=="by_id"){
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getPlantsByShopId_incr()
+                        }
+                    }
+                    else if(plantsSortState=="by_name_incr"){
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getPlantsByShopId_decr()
+                        }
+                    }
+                    else{
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getAllMyPlants()
+                        }
+                    }
+
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // This method is called after the text has been changed
+            }
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         viewModel.isProductPressed.observe(viewLifecycleOwner,{
@@ -207,6 +237,81 @@ init {
 
 
 
+
+
+
+
+
+
+
+
+        binding.changeStatee.setOnClickListener {
+            if(isProductPressed) {
+                when (plantsSortState) {
+                    "by_id" -> {
+                        Toast.makeText(context, "by_name_incr", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getPlantsByShopId_incr()
+                        }
+                        plantsSortState = "by_name_incr"
+
+                    }
+
+                    "by_name_incr" -> {
+                        Toast.makeText(context, "by_name_dcr", Toast.LENGTH_SHORT).show()
+
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getPlantsByShopId_decr()
+                        }
+                        plantsSortState = "by_name_dcr"
+
+
+                    }
+
+                    "by_name_dcr" -> {
+                        Toast.makeText(context, "by_id", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            viewModel.getAllMyPlants()
+                        }
+                        plantsSortState = "by_id"
+                    }
+
+                }
+            }
+            else {
+                when (ordersSortState) {
+                    "by_id" -> {
+                        Toast.makeText(context, "by_category_from_big", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch (Dispatchers.IO){
+                            viewModel.getOrdersbyOrderStatus()
+                        }
+                        ordersSortState ="by_category_from_big"
+
+                    }
+                    "by_category_from_big" -> {
+                        Toast.makeText(context, "by_category_from_small", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch (Dispatchers.IO){
+                            viewModel.getOrdersbyOrderStatus_decr()
+                        }
+                        ordersSortState ="by_category_from_small"
+
+                    }
+
+                    "by_category_from_small" -> {
+                        Toast.makeText(context, "by_id", Toast.LENGTH_SHORT).show()
+                        lifecycleScope.launch (Dispatchers.IO){
+                            viewModel.getAllMyOrders()
+                        }
+                        ordersSortState ="by_id"
+
+
+                    }
+                }
+            }
+        }
+
+
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -238,6 +343,22 @@ init {
 
         binding.btnOrders.setBackgroundColor(getResources().getColor(R.color.light_green_800))
         binding.btnProduct.setBackgroundColor(getResources().getColor(R.color.white))
+
+    }
+    fun onChange(txt: String?) {
+        val plantList =viewModel.plantList.value
+        val newList = mutableListOf<Seed>()
+        if(txt!=null && plantList!=null){
+            for(a in 0 until plantList.size){
+                if(plantList.get(a).name.contains(txt)){
+                    newList.add(plantList.get(a))
+                }
+            }
+            viewModel.plantList.postValue(newList)
+
+
+
+        }
 
     }
 

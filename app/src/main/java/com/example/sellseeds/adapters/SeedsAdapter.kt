@@ -7,9 +7,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.databinding.ProductDetailsBinding
 import com.example.sellseeds.databinding.RowGridrectangletwelveTwoBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class SeedsAdapter(val navConteoller: NavController, val context: Context?  ,var layoutInflater: LayoutInflater): RecyclerView.Adapter<SeedsAdapter.SeedsViewHolder>() {
@@ -76,9 +81,22 @@ class SeedsAdapter(val navConteoller: NavController, val context: Context?  ,var
 
 
             }
+            MainScope().launch {
+
+
+                // Update the user interface (UI) with the thread result of the user interface (UI)
+                withContext(Dispatchers.Main) {
+                    val resizeImage = plant.images
+
+                    Glide.with(context!!)
+                        .load(resizeImage)
+                        .into(holder.binding.imageRectangleTwelveTwo)
+                }
+            }
             with(holder.binding) {
 
-                imageRectangleTwelveTwo.setImageResource(plant.images)
+
+                //imageRectangleTwelveTwo.setImageResource(plant.images)
                 plantName.text =plant.name
                 plantPrice.text =plant.price.toString()
                 plantCount.text =plant.quantity.toString()

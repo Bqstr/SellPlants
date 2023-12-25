@@ -29,7 +29,7 @@ class PlantDbEntity(
     @ColumnInfo(name ="name") val name:String,
     @ColumnInfo(name ="description") val description:String,
     @ColumnInfo(name ="price") val price:Int,
-    @ColumnInfo(name ="images") val images :Int,
+    @ColumnInfo(name ="images") val images :String,
     @ColumnInfo(name ="quantity") val quantity:Int,
     @ColumnInfo(name ="haveDiscount") val haveDiscount: Boolean,
     @ColumnInfo(name ="discount") val discount:Double?,

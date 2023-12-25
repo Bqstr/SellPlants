@@ -53,7 +53,7 @@ class Buyer_HomePageFragment : Fragment() {
         shopAdapter = ShopsAdapter(findNavController(), context)
         ordersAdapter = OrdersAdapter(
             findNavController(),
-            context,
+            requireContext(),
             true
         )
         viewModel.shopsAdapter.postValue(shopAdapter)
@@ -62,13 +62,8 @@ class Buyer_HomePageFragment : Fragment() {
         binding.abobus.layoutManager = layoutManager
         shopsPressed()
 
-        //  }
 
-
-        //shopAdapter.shops = mutableListOf(createSellerData())
-        //ordersAdapter.orders =createOrderData()
         lifecycleScope.launch(Dispatchers.IO) {
-            //viewModel.getUsers()
             viewModel.getAllShops()
             viewModel.getCurrentUser()
             viewModel.getAllMyOrders()
@@ -88,11 +83,11 @@ class Buyer_HomePageFragment : Fragment() {
 
 
         binding.imageVectorFour.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
+           // lifecycleScope.launch(Dispatchers.IO) {
 
-                viewModel.userId.postValue(viewModel.getCurrentId())
-                //viewModel.getUsers()
-            }
+                //viewModel.userId.postValue(viewModel.getCurrentId())
+          //  }
+            findNavController().navigateUp()
         }
 
 
@@ -127,10 +122,8 @@ class Buyer_HomePageFragment : Fragment() {
 
         viewModel.userId.observe(viewLifecycleOwner) {
 
-            //viewModel.userCurrentId.getCurrentUserId()
             Log.d("asasasasasas", it.toString())
 
-            //Toast.makeText(context , "$it <-  eto" , Toast.LENGTH_LONG).show()
 
         }
         viewModel.userList.observe(viewLifecycleOwner) {
@@ -140,7 +133,6 @@ class Buyer_HomePageFragment : Fragment() {
         }
 
         val searchView =binding.etGroupTwentyThree as EditText
-       // searchView.setOnQueryTextListener(this@Buyer_HomePageFragment)
         searchView.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // This method is called before the text is changed

@@ -5,11 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 
 import com.example.sellseeds.R
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.databinding.FragmentSellerProductInfoBinding
 import com.example.sellseeds.databinding.RowGridrectangletwelveTwoBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
@@ -38,7 +43,24 @@ class SellerProductInfoFragment : Fragment() {
         val plant =arguments?.getSerializable("12321321") as Seed
 
         binding.textView3.text =plant.name
-        binding.abobus.setImageResource(plant.images)
+        //binding.abobus.setImageResource(plant.images)
+
+
+        MainScope().launch {
+
+
+            // Update the user interface (UI) with the thread result of the user interface (UI)
+            withContext(Dispatchers.Main) {
+                val resizeImage = plant.images
+
+                Glide.with(requireContext())
+                    .load(resizeImage)
+                    .into(binding.abobus)
+            }
+        }
+
+
+
 
         // Inflate the layout for this fragment
         return binding.root

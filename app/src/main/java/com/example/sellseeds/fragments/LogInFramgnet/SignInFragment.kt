@@ -44,19 +44,7 @@ lateinit var binding:ActivityLoginBinding
             }
 
         }
-//        binding.register.setOnClickListener{
-//            lifecycleScope.launch(Dispatchers.IO) {
 //
-//                viewModel.register(User(0,"admin","admin@gmail.com","adressss","+777", mutableListOf(),"123"))
-//
-//            }
-//        }
-//        binding.showResult.setOnClickListener{
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                viewModel.userData.postValue(viewModel.getData())
-//            }
-//
-//        }
 
 
 
@@ -108,12 +96,12 @@ lateinit var binding:ActivityLoginBinding
         }
         binding.registerAsShop.setOnClickListener{
 
-           // findNavController().navigate(R.id.action_signInFragment_to_registerSellerFragment)
+            findNavController().navigate(R.id.action_signInFragment_to_registerSellerFragment)
         }
         binding.registerAsUser.setOnClickListener{
 
 
-           // findNavController().navigate(R.id.action_signInFragment_to_registerUserFragment)
+            findNavController().navigate(R.id.action_signInFragment_to_registerUserFragment)
         }
             return binding.root
 

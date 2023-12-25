@@ -35,8 +35,9 @@ class OrdersRepositoryRealization(val ordersDao: OrdersDao ,val plantsDao: Plant
         return  t.map { OrderDbEntity ->OrderDbEntity!!.toOrder() }
     }
 
-    override suspend fun getOrdersByShopId(shop_id1: Int): List<Orders>? {
-        return  ordersDao.getOrdersByShopId(shop_id1)!!.map{ OrderDbEntity -> OrderDbEntity!!.toOrder()}
+    override suspend fun getOrdersByShopId(shop_id1: Int): List<Orders> {
+        val sss =ordersDao.getOrdersByShopId(shop_id1) ?: return listOf()
+        return  sss.map{ OrderDbEntity -> OrderDbEntity!!.toOrder()}
 
     }
 
@@ -63,5 +64,17 @@ class OrdersRepositoryRealization(val ordersDao: OrdersDao ,val plantsDao: Plant
         val s =ordersDao.getOrdersbyOrderStatus_decr(userId) ?: return listOf()
 
         return  s.map{ OrderDbEntity -> OrderDbEntity.toOrder()}
+    }
+
+    override fun getOrdersbyOrderStatus_byShopID(shopId: Int): List<Orders> {
+
+        val s =ordersDao.getOrdersbyOrderStatus_byShopID(shopId) ?: return listOf()
+
+        return s.map { OrderDbEntity -> OrderDbEntity.toOrder() }    }
+
+    override fun getOrdersbyOrderStatus_byShopId_decr(shopId: Int): List<Orders> {
+        val s =ordersDao.getOrdersbyOrderStatus_byShopId_decr(shopId) ?: return listOf()
+
+        return s.map { OrderDbEntity -> OrderDbEntity.toOrder() }
     }
 }

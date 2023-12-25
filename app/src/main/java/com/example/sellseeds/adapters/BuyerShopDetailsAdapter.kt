@@ -11,6 +11,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.sellseeds.dataClass_enum.Converter
 import com.example.sellseeds.dataClass_enum.OrderStatus
 import com.example.sellseeds.dataClass_enum.Orders
@@ -22,7 +23,9 @@ import com.example.sellseeds.model.orders.OrdersRepository
 import com.example.sellseeds.model.user.UserCurrentId
 import com.example.sellseeds.model.user.UserRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Date
 
 
@@ -50,12 +53,29 @@ class BuyerShopDetailsAdapter(
 
     override fun onBindViewHolder(holder: BuyerShopDetailsViewHolder, position: Int) {
         val plant =plants[position]
+
+
+
+        MainScope().launch {
+
+
+            // Update the user interface (UI) with the thread result of the user interface (UI)
+            withContext(Dispatchers.Main) {
+                val resizeImage = plant.images
+
+                Glide.with(context!!)
+                    .load(resizeImage)
+                    .into(holder.binding.imageRectangleTwelveOne)
+            }
+        }
         with(holder.binding){
+
+
 
             txtMonsteraplantsOne.text =plant.name
             txtFlowerplantOne.text =Converter.CategorytoString(plant.category)//category
             txtPriceThree.text =plant.price.toString()//price
-            imageRectangleTwelveOne.setImageResource(plant.images)   //image
+            //imageRectangleTwelveOne.setImageResource(plant.images)   //image
 
             if(plant.discount.haveDiscount){
                 txtOffer.visibility = View.VISIBLE
@@ -80,7 +100,24 @@ class BuyerShopDetailsAdapter(
 
             val layut =binding.root
 
-            binding.imageRectangleTwelveFour.setImageResource(plant.images)
+
+
+            MainScope().launch {
+
+
+                // Update the user interface (UI) with the thread result of the user interface (UI)
+                withContext(Dispatchers.Main) {
+                    val resizeImage = plant.images
+
+                    Glide.with(context!!)
+                        .load(resizeImage)
+                        .into(binding.imageRectangleTwelveFour)
+                }
+            }
+
+
+
+            //binding.imageRectangleTwelveFour.setImageResource(plant.images)
             binding.txtMonsteraplantsFour.text =plant.name
             binding.txtLanguage.text =plant.name
             binding.txtPriceEight.text =holder.binding.txtPriceThree.text

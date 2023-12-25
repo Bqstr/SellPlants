@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.example.myapplication.UnsplashApi
 
 import com.example.sellseeds.R
 import com.example.sellseeds.dataClass_enum.Category
@@ -24,6 +26,8 @@ import com.example.sellseeds.model.Repositories
 import com.example.sellseeds.viewModelCreator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * A simple [Fragment] subclass.
@@ -49,9 +53,7 @@ val viewModel by viewModelCreator { AddProductViewModel(
         val spinner = binding.etGroupThirteen
         var category =Category.BigPlant
         ArrayAdapter.createFromResource(requireContext() ,R.array.category_array ,R.layout.dropdown_categories).also { adapter ->
-            // Specify the layout to use when the list of choices appears.
-           // adapter.setDropDownViewResource(R.layout.dropdown_categories)
-            // Apply the adapter to the spinner.
+
             binding.etGroupThirteen.adapter = adapter
         }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -92,7 +94,7 @@ val viewModel by viewModelCreator { AddProductViewModel(
                 quantity = count,
                 price = price,
                 discount = discount,
-                images = R.drawable.faux_palm_tree,
+                images = viewModel.imageUrl.value!!,
                 shop_id =it
             )
 
@@ -107,7 +109,7 @@ val viewModel by viewModelCreator { AddProductViewModel(
 
 
 
-
+            //Log.d("fffhfhfhfhf", binding.imageFromUrl)
 
             findNavController().navigateUp()
         }
@@ -118,6 +120,66 @@ val viewModel by viewModelCreator { AddProductViewModel(
             }
         }
 
+        viewModel.imageUrl.observe(viewLifecycleOwner){
+            Log.d("adsdwwwwwww",it)
+            val resizeImage = it
+            Glide.with(this)
+                .load(resizeImage)
+                .into(binding.imageFromUrl)
+
+
+        }
+        binding.searchImageButton.setOnClickListener{
+            lifecycleScope.launch(Dispatchers.IO) {
+            val retroF =
+                Retrofit.Builder()
+                    .baseUrl(UnsplashApi.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+
+            val unsplashApi =
+                retroF.create(UnsplashApi::class.java)
+
+
+                val text = binding.searchImageText.text
+                Log.d(
+                    "adsdwwwwwww",
+                    text.toString()
+                )
+                if (text.isNotBlank()) {
+                    Log.d(
+                        "adsdwwwwwww",
+                        "amongus"
+                    )
+                    val s = unsplashApi.searchPhotos(
+                        "search/photos?page=1&query=${text.toString()}}",
+                        1,
+                        1
+                    )
+
+
+                    viewModel.imageUrl.postValue(s.results[0].urls.small)
+
+                }
+                else{
+                    Log.d(
+                        "adsdwwwwwww",
+                        "cheeee?"
+                    )
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+        }
+
 
 
 
@@ -125,24 +187,6 @@ val viewModel by viewModelCreator { AddProductViewModel(
         return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddProductFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddProductFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 
 
 

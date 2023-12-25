@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 
 import com.example.sellseeds.R
 import com.example.sellseeds.ViewModelCreator
@@ -22,7 +23,9 @@ import com.example.sellseeds.fragments.Seller.AddProduct.ADD_PRODUCT_KEY
 import com.example.sellseeds.model.Repositories
 import com.example.sellseeds.viewModelCreator
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.Serializable
 import java.util.Date
 
@@ -170,7 +173,22 @@ val viewModel by viewModelCreator{Seller_OrderViewModel(Repositories.ordersRepos
             binding.txtMonsteraplants.text =it.name
             binding.txtPriceOne.text =it.price.toString()
 
-            binding.imagePlantOrderSeller.setImageResource(it.images)
+            //binding.imagePlantOrderSeller.setImageResource(it.images)
+
+            MainScope().launch {
+
+
+                // Update the user interface (UI) with the thread result of the user interface (UI)
+                withContext(Dispatchers.Main) {
+                    val resizeImage = it.images
+
+                    Glide.with(requireContext())
+                        .load(resizeImage)
+                        .into(binding.imagePlantOrderSeller)
+                }
+            }
+
+
 
 
         }

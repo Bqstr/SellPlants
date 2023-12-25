@@ -10,6 +10,9 @@ import com.example.sellseeds.model.shop.ShopRepository
 
 class AddProductViewModel(val plantsRepository: PlantsRepository ,val shop_currentId: ShopCurrentId ,shopRepository: ShopRepository): ViewModel() {
 
+    val imageUrl =MutableLiveData<String>()
+
+
     val currentId =MutableLiveData<Int>()
     suspend fun addProduct( seed: Seed, ){
         plantsRepository.addPlant(seed)

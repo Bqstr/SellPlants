@@ -26,7 +26,7 @@ interface OrdersRepository {
 
     suspend fun getOrdersByUserId(userId:Int):List<Orders>
 
-    suspend fun getOrdersByShopId(shop_id1:Int):List<Orders>?
+    suspend fun getOrdersByShopId(shop_id1:Int):List<Orders>
 
     suspend fun getShopByOrderId(orderId:Int): Shop
 
@@ -39,4 +39,10 @@ interface OrdersRepository {
     suspend fun getOrdersbyOrderStatus(userId:Int):List<Orders>
 
     suspend fun getOrdersbyOrderStatus_decr(userId:Int):List<Orders>
+
+
+
+    fun getOrdersbyOrderStatus_byShopID(shopId:Int):List<Orders>?
+
+    fun getOrdersbyOrderStatus_byShopId_decr(shopId:Int):List<Orders>?
 }

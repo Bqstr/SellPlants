@@ -22,224 +22,104 @@ import com.example.sellseeds.model.shop.ShopRepository
 
 class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepository: PlantsRepository ,val currentId: ShopCurrentId ,val ordersRepository: OrdersRepository): ViewModel() {
 
-    val sortState = MutableLiveData<String>()
-    val shop_currentId =MutableLiveData<Int>()
-    private var _orderList =MutableLiveData<MutableList<Orders>>()
-    var orderList :LiveData<MutableList<Orders>> =_orderList
+    val plantsSortState = MutableLiveData<String>()
+    val ordersSortState = MutableLiveData<String>()
 
-    val currentShop =MutableLiveData<Shop>()
+    val shop_currentId = MutableLiveData<Int>()
+    var orderList= MutableLiveData<MutableList<Orders>>()
 
-
-    private var _productList =MutableLiveData<MutableList<Seed>>()
-    var productList :LiveData<MutableList<Seed>> =_productList
-
-    private var _isProductPressed =MutableLiveData<Boolean>()
-    var isProductPressed :LiveData<Boolean> =_isProductPressed
+    val currentShop = MutableLiveData<Shop>()
 
 
-    init{
+    private var _productList = MutableLiveData<MutableList<Seed>>()
+    var productList: LiveData<MutableList<Seed>> = _productList
 
-      //  _productList.postValue(createData())
-       // _orderList.postValue(createOrderData())
+    private var _isProductPressed = MutableLiveData<Boolean>()
+    var isProductPressed: LiveData<Boolean> = _isProductPressed
+
+    init {
+
+        //  _productList.postValue(createData())
+        // _orderList.postValue(createOrderData())
         _isProductPressed.postValue(true)
 
 
     }
-    val plantList=MutableLiveData<List<Seed>>()
+
+    val plantList = MutableLiveData<List<Seed>>()
 
 
-
-    fun addProduct(product:Seed){
-        if(productList.value!=null){
-           val l =productList.value!!
+    fun addProduct(product: Seed) {
+        if (productList.value != null) {
+            val l = productList.value!!
             l.add(product)
             _productList.postValue(l)
-        }
-        else{
+        } else {
             val list = mutableListOf<Seed>()
             list.add(product)
             _productList.postValue(list)
         }
     }
 
-    suspend fun getAllMyOrders(){
-        _orderList.postValue(ordersRepository.getOrdersByShopId(currentId.getCurrentId())!!.toMutableList())
+    suspend fun getAllMyOrders() {
+        orderList.postValue(
+            ordersRepository.getOrdersByShopId(currentId.getCurrentId())!!.toMutableList()
+        )
 
     }
-    suspend fun getCurrentId(){
-        Log.d("xzxzxzxzx" ,currentId.getCurrentId().toString())
+
+    suspend fun getCurrentId() {
+        Log.d("xzxzxzxzx", currentId.getCurrentId().toString())
 
         shop_currentId.postValue(currentId.getCurrentId())
     }
 
-    suspend fun getAllOrders():List<Orders>{
-        val s =ordersRepository.getAllOrders()
-        if(s==null){
+    suspend fun getAllOrders(): List<Orders> {
+        val s = ordersRepository.getAllOrders()
+        if (s == null) {
             return listOf()
         }
-       return ordersRepository.getAllOrders()!!
+        return ordersRepository.getAllOrders()!!
     }
-    suspend fun getAllMyPlants(){
-        Log.d("1111111111111",plantsRepository.getPlantsByShopId(currentId.getCurrentId()).toString())
 
-        if(plantsRepository.getPlantsByShopId(currentId.getCurrentId())==null){
+    suspend fun getAllMyPlants() {
+        Log.d(
+            "1111111111111",
+            plantsRepository.getPlantsByShopId(currentId.getCurrentId()).toString()
+        )
+
+        if (plantsRepository.getPlantsByShopId(currentId.getCurrentId()) == null) {
             plantList.postValue(mutableListOf())
-        }
-        else{
+        } else {
             plantList.postValue(plantsRepository.getPlantsByShopId(currentId.getCurrentId()))
         }
     }
-    suspend fun getShopbyId(id:Int){
-           currentShop.postValue(shopRepository.getShopById(id))
+
+    suspend fun getShopbyId(id: Int) {
+        currentShop.postValue(shopRepository.getShopById(id))
     }
 
-    fun changeAdapter(b:Boolean){
+    fun changeAdapter(b: Boolean) {
         _isProductPressed.postValue(b)
     }
+    suspend  fun getPlantsByShopId_incr(){
 
+        plantList.postValue(plantsRepository.getPlantsByShopId_incr(currentId.getCurrentId()))
+    }
+    suspend  fun getPlantsByShopId_decr(){
+        plantList.postValue(plantsRepository.getPlantsByShopId_decr(currentId.getCurrentId()).toMutableList())
 
+    }
 
-//
-//    private fun createSellerData(): Shop {
-//        return (Shop(
-//            0,
-//            "Hydra",
-//            "3_head_gydra@gmai.com",
-//            "jail",
-//            "+666",
-//            createData(),
-//            createOrderData(),
-//            R.drawable.img_rectangle19,
-//            Rating.FIVE_STAR,
-//            100,"123"
-//        ))
-//    }
-//
-//
-//    private fun createData(): MutableList<Seed> {
-//        val mutableList = mutableListOf<Seed>(
-//            Seed(
-//                0,
-//                "Olive Tree",
-//                "description",
-//                1000,
-//                R.drawable.img_rectangle12,
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                1,
-//                "Money Tree",
-//                "description",
-//                2000,
-//                listOf(R.drawable.img_rectangle12_1),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                2,
-//                "Faux Palm Tree",
-//                "description",
-//                3000,
-//                listOf(R.drawable.img_rectangle12_108x110),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                3,
-//                "Kek Tree",
-//                "description",
-//                999,
-//                listOf(R.drawable.img_rectangle12_2),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                0,
-//                "Olive Tree",
-//                "description",
-//                1000,
-//                listOf(R.drawable.img_rectangle12),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//            Seed(
-//                2,
-//                "Faux Palm Tree",
-//                "description",
-//                3000,
-//                listOf(R.drawable.img_rectangle12_108x110),
-//                Category.SmallPlant,
-//                1,
-//                Discount(true, 0.2)
-//            ),
-//
-//
-//            )
-//        return mutableList
-//
-//    }
-//
-//    fun createOrderData(): MutableList<Orders> {
-//        val examplePlant = Seed(
-//            0,
-//            "Olive Tree",
-//            "description",
-//            1000,
-//            listOf(R.drawable.img_rectangle12),
-//            Category.SmallPlant,
-//            1,
-//            Discount(true, 0.2)
-//        )
-//        val exampleShop = Shop(0,"1","123","123","123",createData() , mutableListOf(),R.drawable.img_rectangle19,  Rating.FOUR_STAR ,100,"123")
-//        val exampleUser =
-//            User(0, "USER_NAME", "email_user@gmail.com", "USER_ADRESS", "+777777777777777", mutableListOf<Orders>(),"123")
-//
-//        var mut = mutableListOf(
-//            Orders(
-//                123,
-//                1000,
-//                examplePlant,
-//                10,
-//                adress = "ADRESS",
-//                shop = exampleShop,
-//                buyer = exampleUser,
-//                date = 12312,
-//                status = OrderStatus.InProgress
-//            ),
-//            Orders(
-//                124,
-//                2000,
-//                examplePlant,
-//                20,
-//                adress = "ADRESS",
-//                shop = exampleShop,
-//                buyer = exampleUser,
-//                date = 12312123,
-//                status = OrderStatus.Completed
-//            ),
-//
-//            Orders(
-//                125,
-//                6000,
-//                examplePlant,
-//                10,
-//                adress = "ADRESS",
-//                shop = exampleShop,
-//                buyer = exampleUser,
-//                date = 12312,
-//                status = OrderStatus.Canceled
-//            )
-//        )
-//
-//        return mut
-//    }
-//
+    suspend fun getOrdersbyOrderStatus(){
+        orderList.postValue(ordersRepository.getOrdersbyOrderStatus(currentId.getCurrentId()).toMutableList())
+    }
+
+    suspend fun getOrdersbyOrderStatus_decr() {
+        orderList.postValue(ordersRepository.getOrdersbyOrderStatus_decr(currentId.getCurrentId()).toMutableList())
+
+    }
 
 }
+
 

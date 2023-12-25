@@ -6,11 +6,11 @@ class Converter {
         fun CategorytoString(category: Category): String {
             return when (category) {
                 Category.SmallPlant -> {
-                    "Small Plant"
+                    "SmallPlant"
                 }
 
-                Category.BigPlant -> "Big Plant"
-                Category.MediumPlant -> "Medium Plant"
+                Category.BigPlant -> "BigPlant"
+                Category.MediumPlant -> "MediumPlant"
 
             }
 

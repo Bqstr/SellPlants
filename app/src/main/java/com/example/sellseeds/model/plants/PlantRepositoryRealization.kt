@@ -21,7 +21,10 @@ class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurre
         dao.createPlant(PlantDbEntity.fromSeed(seed))
             }
 
-
+    override suspend fun getAllMyPlant(shopId: Int): List<Seed> {
+        val ssd =dao.getAllMyPlant(shopId) ?: listOf()
+        return ssd.map { PlantDbEntity -> PlantDbEntity.toSeed() }
+    }
 
 
     override suspend  fun getAllPlants(): List<Seed>{
@@ -50,7 +53,27 @@ class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurre
         }
     }
 
+    override suspend fun getPlantsByShopId_incr(shopId: Int): List<Seed> {
+        val qwe =dao.getPlantsByShopId_incr(shopId) ?: return listOf()
+        return qwe.map { PlantDbEntity -> PlantDbEntity.toSeed() }
+    }
 
+    override suspend fun getPlantsByShopId_decr(shopId: Int): List<Seed> {
+        val asd =dao.getPlantsByShopId_decr(shopId) ?: return listOf()
+        return asd.map { PlantDbEntity -> PlantDbEntity.toSeed() }
+
+    }
+
+    override suspend fun getPlantByCategory_incr(shopId: Int): List<Seed> {
+        val sssdw =dao.getPlantByCategory_incr(shopId) ?: return listOf()
+        return sssdw.map { PlantDbEntity -> PlantDbEntity.toSeed() }
+
+    }
+
+    override suspend fun getPlantByCategory_decr(shopId: Int): List<Seed> {
+        val sssdw =dao.getPlantByCategory_decr(shopId) ?: return listOf()
+        return sssdw.map { PlantDbEntity -> PlantDbEntity.toSeed() }
+    }
 
 
 }

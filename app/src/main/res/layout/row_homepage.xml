@@ -62,20 +62,6 @@
                 android:scaleType="fitXY"
                 tools:src="@drawable/img_rectangle19"
                 />
-            <ImageButton
-                android:background="@drawable/rectangle_bg_black_900_a0_radius_12_5"
-                android:id="@+id/btnArrowright"
-                android:layout_gravity="end"
-                android:layout_height="@dimen/_25pxh"
-                android:layout_marginBottom="@dimen/_63pxv"
-                android:layout_marginEnd="@dimen/_10pxh"
-                android:layout_marginStart="@dimen/_10pxh"
-                android:layout_marginTop="@dimen/_63pxv"
-                android:layout_width="@dimen/_25pxh"
-                android:paddingHorizontal="@dimen/_6pxh"
-                android:paddingVertical="@dimen/_6pxv"
-                android:scaleType="fitCenter"
-                android:src="@drawable/img_arrowright_white_a700" tools:ignore="ContentDescription"/>
         </FrameLayout>
         <TextView android:ellipsize="end"
             android:gravity="center_horizontal"

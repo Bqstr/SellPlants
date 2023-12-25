@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "07733089fad67d487c140e42576e5175",
+    "identityHash": "10e626417a8525d851250f6f77df6629",
     "entities": [
       {
         "tableName": "user",
@@ -118,7 +118,7 @@
       },
       {
         "tableName": "plant",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `price` INTEGER NOT NULL, `images` INTEGER NOT NULL, `quantity` INTEGER NOT NULL, `haveDiscount` INTEGER NOT NULL, `discount` REAL, `category` TEXT NOT NULL, `shop_id` INTEGER NOT NULL, FOREIGN KEY(`shop_id`) REFERENCES `shop`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT NOT NULL, `price` INTEGER NOT NULL, `images` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `haveDiscount` INTEGER NOT NULL, `discount` REAL, `category` TEXT NOT NULL, `shop_id` INTEGER NOT NULL, FOREIGN KEY(`shop_id`) REFERENCES `shop`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -147,7 +147,7 @@
           {
             "fieldPath": "images",
             "columnName": "images",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -291,7 +291,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '07733089fad67d487c140e42576e5175')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '10e626417a8525d851250f6f77df6629')"
     ]
   }
 }
