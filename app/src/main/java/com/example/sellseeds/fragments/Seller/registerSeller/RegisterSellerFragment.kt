@@ -40,7 +40,15 @@ lateinit var binding:ActivityRegisterSellerBinding
 
 
         viewModel.naviagate_toMain.observe(viewLifecycleOwner){
-            findNavController().navigate(R.id.action_registerSellerFragment_to_sellerHomePageFragment)
+            if(it){
+                findNavController().navigate(R.id.action_registerSellerFragment_to_sellerHomePageFragment)
+
+                viewModel.naviagate_toMain.postValue(false)
+
+            }
+            else{
+                findNavController().navigateUp()
+            }
 
         }
         binding.toleBar.imageArrowleft.setOnClickListener{

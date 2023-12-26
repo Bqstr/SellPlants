@@ -53,23 +53,23 @@ class SeedsAdapter(val navConteoller: NavController, val context: Context?  ,var
 
 
 
-                val layut =binding.dialogLayout
-
-                builder.setView(binding.root)
-
-                val alertDialog =builder.create()
-
-                binding.imageArrowleft.setOnClickListener{
-                    alertDialog.cancel()
-                }
-
-
-
-                if(alertDialog.window!=null){
-                    alertDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
-                }
-
-                alertDialog.show()
+//                val layut =binding.dialogLayout
+//
+//                builder.setView(binding.root)
+//
+//                val alertDialog =builder.create()
+//
+//                binding.imageArrowleft.setOnClickListener{
+//                    alertDialog.cancel()
+//                }
+//
+//
+//
+//                if(alertDialog.window!=null){
+//                    alertDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+//                }
+//
+//                alertDialog.show()
 
 
 

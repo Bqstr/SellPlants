@@ -5,21 +5,11 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/signInFragment">
 
-
-    <fragment
-
-        android:id="@+id/userAccount_ic"
-        android:name="com.example.sellseeds.fragments.Seller.EditPlantFragment.EditPlant"
-        android:label="fragment_user_account"
-        tools:layout="@layout/fragment_user_account" />
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.sellseeds.fragments.LogInFramgnet.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
-        <action
-            android:id="@+id/action_signInFragment_to_main_page_ic"
-            app:destination="@id/main_page_ic" />
         <action
             android:id="@+id/action_signInFragment_to_sellerHomePageFragment"
             app:destination="@id/sellerHomePageFragment" />
@@ -39,9 +29,6 @@
         android:label="fragment_seller_home_page"
         tools:layout="@layout/fragment_seller_home_page" >
         <action
-            android:id="@+id/action_sellerHomePageFragment_to_seller_EditProfileFragment"
-            app:destination="@id/seller_EditProfileFragment" />
-        <action
             android:id="@+id/action_sellerHomePageFragment_to_sellerProductInfoFragment"
             app:destination="@id/sellerProductInfoFragment" />
         <action
@@ -51,11 +38,6 @@
             android:id="@+id/action_sellerHomePageFragment_to_seller_OrderFragment"
             app:destination="@id/seller_OrderFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/seller_EditProfileFragment"
-        android:name="com.example.sellseeds.fragments.Seller.EditProfile.Seller_EditProfileFragment"
-        android:label="delete"
-        tools:layout="@layout/activity_seller_editprofile" />
     <fragment
         android:id="@+id/addProductFragment"
         android:name="com.example.sellseeds.fragments.Seller.AddProduct.AddProductFragment"
@@ -78,38 +60,12 @@
         tools:layout="@layout/activity_buyer_homepage"
         >
         <action
-            android:id="@+id/action_buyer_HomePageFragment_to_buyerEditProfileFragment"
-            app:destination="@id/buyerEditProfileFragment" />
-        <action
             android:id="@+id/action_buyer_HomePageFragment_to_buyerShopFragment"
             app:destination="@id/buyerShopFragment" />
         <action
             android:id="@+id/action_buyer_HomePageFragment_to_seller_OrderFragment"
             app:destination="@id/seller_OrderFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/buyerEditProfileFragment"
-        android:name="com.example.sellseeds.fragments.Buyer.EditProfilePage.BuyerEditProfileFragment"
-        android:label="fragment_buyer_edit_profile"
-        tools:layout="@layout/activity_user_editprofile" >
-        <action
-            android:id="@+id/action_buyerEditProfileFragment_to_buyerOrderFragment"
-            app:destination="@id/buyerOrderFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/buyerOrderFragment"
-        android:name="com.example.sellseeds.fragments.Buyer.Orders.BuyerOrderFragment"
-        android:label="fragment_buyer_order"
-        tools:layout="@layout/fragment_buyer_order" >
-        <action
-            android:id="@+id/action_buyerOrderFragment_to_buyerOrderDetailFragment"
-            app:destination="@id/buyerOrderDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/buyerOrderDetailFragment"
-        android:name="com.example.sellseeds.fragments.Buyer.OrderDetails.BuyerOrderDetailFragment"
-        android:label="fragment_buyer_order_detail"
-        tools:layout="@layout/fragment_buyer_order_detail" />
     <fragment
         android:id="@+id/buyerShopFragment"
         android:name="com.example.sellseeds.fragments.Buyer.Shop.BuyerShopFragment"

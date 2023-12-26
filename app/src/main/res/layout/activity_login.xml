@@ -86,8 +86,8 @@
             android:layout_marginTop="@dimen/_8pxv"
             android:layout_width="wrap_content"
             android:singleLine="true"
-            android:text="@string/msg_forgot_password"
-            style="@style/txtSFProTextregular14" tools:text="@string/msg_forgot_password"/>
+            android:text="Wish luck!"
+            style="@style/txtSFProTextregular14" tools:text="Wish luck!"/>
 
     <androidx.appcompat.widget.AppCompatButton
             android:ellipsize="end" android:gravity="center"

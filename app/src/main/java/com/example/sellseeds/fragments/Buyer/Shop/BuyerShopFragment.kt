@@ -136,6 +136,22 @@ val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId
 
             return binding.root
     }
+    fun onChange(txt: String?) {
+        val plantList =viewModel.plants.value
+        val newList = mutableListOf<Seed>()
+        if(txt!=null && plantList!=null){
+            for(a in 0 until plantList.size){
+                if(plantList.get(a).name.contains(txt)){
+                    newList.add(plantList.get(a))
+                }
+            }
+            viewModel.plants.postValue(newList)
+
+
+
+        }
+
+    }
 
 
 }

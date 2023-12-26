@@ -111,6 +111,16 @@ class SellerHomePageViewModel(val shopRepository: ShopRepository ,val plantsRepo
 
     }
 
+    suspend  fun getOrdersByShopId_incr(){
+
+        orderList.postValue(ordersRepository.getOrdersbyOrderStatus_byShopID(currentId.getCurrentId())?.toMutableList())
+    }
+    suspend  fun getOrdersByShopId_decr(){
+        orderList.postValue(ordersRepository.getOrdersbyOrderStatus_byShopID(currentId.getCurrentId())?.toMutableList())
+
+    }
+
+
     suspend fun getOrdersbyOrderStatus(){
         orderList.postValue(ordersRepository.getOrdersbyOrderStatus(currentId.getCurrentId()).toMutableList())
     }

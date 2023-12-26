@@ -36,8 +36,8 @@ class OrdersAdapterForShop (val navConteoller: NavController, val context: Conte
 
             // Update the user interface (UI) with the thread result of the user interface (UI)
             withContext(Dispatchers.Main) {
-                val user=ordersRepository.getUserByOrderId(order.id)
-                holder.binding.orderEmail.text =user.email
+                val shop=ordersRepository.getShopByOrderId(order.id)
+                holder.binding.orderEmail.text =shop.email
             }
         }
 
