@@ -2,6 +2,7 @@ package com.example.sellseeds.model
 
 import android.content.Context
 import androidx.room.Room
+import com.example.myapplication.UnsplashApi
 import com.example.sellseeds.model.orders.OrdersRepository
 import com.example.sellseeds.model.orders.OrdersRepositoryRealization
 import com.example.sellseeds.model.plants.PlantRepositoryRealization
@@ -14,10 +15,21 @@ import com.example.sellseeds.model.shop.ShopRepositoryRealization
 import com.example.sellseeds.model.shop.entities.ShopIdRealization
 import com.example.sellseeds.model.user.RoomUserRepository
 import com.example.sellseeds.model.user.UserRepository
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 object Repositories {
     lateinit var applicationContext : Context
 
+
+    val retroFit =
+        Retrofit.Builder()
+            .baseUrl(UnsplashApi.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    val unsplashApi =
+        retroFit.create(UnsplashApi::class.java)
 
 
 

@@ -11,7 +11,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 
 import com.example.sellseeds.databinding.ActivityMainBinding
-import com.example.sellseeds.fragments.ListFragment.ListFragment
 import com.example.sellseeds.model.Repositories
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

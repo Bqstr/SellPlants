@@ -12,6 +12,6 @@ data class Seed(val id:Long, val name:String, val description:String, val price:
                 val quantity:Int,//Amount of plants
                 @Ignore
                 val discount: Discount,
-    val shop_id :Int
+                val shop_id :Int
 
     ):Serializable

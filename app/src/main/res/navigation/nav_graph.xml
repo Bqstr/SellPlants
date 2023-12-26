@@ -5,14 +5,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/signInFragment">
 
-    <fragment
-        android:id="@+id/main_page_ic"
-        android:name="com.example.sellseeds.fragments.ListFragment.ListFragment"
-        android:label="ListFragment">
-        <action
-            android:id="@+id/action_listFragment_to_userAccount"
-            app:destination="@id/userAccount_ic" />
-    </fragment>
+
     <fragment
 
         android:id="@+id/userAccount_ic"
