@@ -1,14 +1,41 @@
 package com.example.sellseeds.model.plants
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.liveData
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
 import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 import com.example.sellseeds.model.plants.entenies.PlantDbEntity.Companion.toSeed
 import com.example.sellseeds.model.shop.ShopDao
 import com.example.sellseeds.model.user.UserCurrentId
+import com.example.sellseeds.paging.PlantPagingSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurrentId,val shopDao: ShopDao):PlantsRepository {
+class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurrentId,val shopDao: ShopDao,val ioDsipatcher: CoroutineContext):PlantsRepository {
+    override suspend fun getPagedPlantsForShop(shopId: Int): Flow<PagingData<Seed>> {
+
+        return Pager(config =PagingConfig(
+            pageSize = PAGE_SIZE , enablePlaceholders = false
+        ),
+            pagingSourceFactory = {PlantPagingSource(plantDao = dao, shopId =shopId , pageSize = PAGE_SIZE)
+            }
+        ).flow
+
+
+
+
+    }
+
+
     override suspend  fun getShops(): List<Shop> {
         if(shopDao.getAll()==null){
             return listOf()
@@ -74,6 +101,16 @@ class PlantRepositoryRealization(val dao: PlantDao, val userCurrentId: UserCurre
         val sssdw =dao.getPlantByCategory_decr(shopId) ?: return listOf()
         return sssdw.map { PlantDbEntity -> PlantDbEntity.toSeed() }
     }
+
+//    override suspend fun getPlantBySHopIdPaging(shopId: Int, limit: Int, offset: Int): List<Seed> {
+//        val s =dao.getPlantByShopIdPaging(shopId ,limit ,offset) ?: return listOf()
+//        return s.map { PlantDbEntity -> PlantDbEntity.toSeed() }
+//    }
+    companion object{
+        val PAGE_SIZE =20
+    }
+
+
 
 
 }

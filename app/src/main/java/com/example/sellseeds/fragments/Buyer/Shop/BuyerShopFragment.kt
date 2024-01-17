@@ -1,19 +1,25 @@
 package com.example.sellseeds.fragments.Buyer.Shop
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.constraintlayout.helper.widget.Carousel.Adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sellseeds.R
 import com.example.sellseeds.adapters.BuyerShopDetailsAdapter
+import com.example.sellseeds.adapters.HelpAdapter
 import com.example.sellseeds.dataClass_enum.Category
 import com.example.sellseeds.dataClass_enum.Discount
 import com.example.sellseeds.dataClass_enum.Seed
@@ -23,6 +29,7 @@ import com.example.sellseeds.databinding.ActivityShopBinding
 import com.example.sellseeds.model.Repositories
 import com.example.sellseeds.viewModelCreator
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -33,6 +40,9 @@ import kotlinx.coroutines.launch
 class BuyerShopFragment : Fragment() {
     var plantsSortState ="by_id"
 lateinit var adapter:BuyerShopDetailsAdapter
+lateinit var helpAdapter:HelpAdapter
+    private lateinit var mainLoadStateHolder: HelpAdapter.HolderHere
+
 lateinit var binding:ActivityShopBinding
 val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId ,Repositories.plantsRepository ,Repositories.shopRepository) }
     override fun onCreateView(
@@ -43,9 +53,15 @@ val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId
 
 
          adapter = BuyerShopDetailsAdapter(findNavController(), context ,layoutInflater ,Repositories.ordersRepository ,Repositories.userCurrentId,Repositories.accountsRepository)
-        binding.recyclerrr.adapter =adapter
+        val helpAdapter =HelpAdapter()
+        val adapterwithelp =adapter.withLoadStateFooter(helpAdapter)
+        binding.recyclerrr.adapter =adapter   //adapterwithelp
         val layoutManager =LinearLayoutManager(context)
         binding.recyclerrr.layoutManager =layoutManager
+
+
+
+
 //        adapter.plants.add(Seed(1 ,"a" ,"123" ,123 , R.drawable.faux_palm_tree ,Category.BigPlant ,10 ,
 //            Discount() ,0
 //        ))
@@ -61,11 +77,11 @@ val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId
 
 
         }
-        viewModel.plants.observe(viewLifecycleOwner){
-            Log.d("123332123s",it.toString())
-            adapter.plants =it.toMutableList()
-            adapter.notifyDataSetChanged()
-        }
+//        viewModel.plants.observe(viewLifecycleOwner){
+//            Log.d("123332123s",it.toString())
+//            adapter.plants =it.toMutableList()
+//            adapter.notifyDataSetChanged()
+//        }
 
         if(arguments!=null) {
             val shop = requireArguments().getSerializable("KEY") as Shop
@@ -75,13 +91,23 @@ val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId
             binding.txtPrice.text = shop.number
             binding.txtEmail.text = shop.email
             binding.txtPriceOne.text = "delivery fees ${shop.fee}"
-            // }
+            //
 
+        //viewModel.currentShopId.postValue(shop.id)
+            submitPlants(shop.id)
+//
+        }
+        viewModel.submitToAdapter.observe(viewLifecycleOwner){
+            if(it) {
+                lifecycleScope.launch {
+                    viewModel.plantFlow.collectLatest { pagingData ->
+                        adapter.submitData(pagingData)
+                    }
+                }
+            }
 
-        lifecycleScope.launch (Dispatchers.IO){
-            viewModel.getAllPlantsOfThisShop(shop)
         }
-        }
+
 
 
         //adapter.plants =createData()
@@ -133,9 +159,55 @@ val viewModel by viewModelCreator{ BuyerShopViewModel(Repositories.userCurrentId
             }
 
 
+        val searchView =binding.etGroupTwentyThree as EditText
+        searchView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // This method is called before the text is changed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val newText = s.toString()
+                if (newText.isNotBlank()) {
+                    onChange(newText)
+
+                } else {
+                    if(plantsSortState=="by_id"){
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            //viewModel.getPlantsByShopId_incr()
+                        }
+                    }
+                    else if(plantsSortState=="by_name_incr"){
+                        lifecycleScope.launch(Dispatchers.IO) {
+                           // viewModel.getPlantsByShopId_decr()
+                        }
+                    }
+                    else{
+                        lifecycleScope.launch(Dispatchers.IO) {
+                           // viewModel.getAllMyPlants()
+                        }
+                    }
+
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // This method is called after the text has been changed
+            }
+        })
+
+
+
 
             return binding.root
     }
+    fun submitPlants(shopId:Int){
+        lifecycleScope.launch {
+            viewModel.commitPlants(shopId)
+
+        }
+
+    }
+
     fun onChange(txt: String?) {
         val plantList =viewModel.plants.value
         val newList = mutableListOf<Seed>()

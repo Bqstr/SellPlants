@@ -1,13 +1,18 @@
 package com.example.sellseeds.model.plants
 
 
+import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import androidx.room.Query
 import com.example.sellseeds.dataClass_enum.Seed
 import com.example.sellseeds.dataClass_enum.Shop
 import com.example.sellseeds.model.plants.entenies.PlantDbEntity
 import com.example.sellseeds.model.shop.entities.ShopDbEntity
+import kotlinx.coroutines.flow.Flow
 
 interface PlantsRepository {
+
+    suspend fun getPagedPlantsForShop(shopId:Int): Flow<PagingData<Seed>>
 
     suspend fun getShops():List<Shop>
 
@@ -30,5 +35,9 @@ interface PlantsRepository {
 
     suspend fun getPlantByCategory_incr(userId: Int):List<Seed>
 
+
     suspend fun getPlantByCategory_decr(userId: Int):List<Seed>
+
+
+    //suspend fun getPlantBySHopIdPaging(shopId :Int ,limit:Int ,offset:Int):List<Seed>
 }

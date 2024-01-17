@@ -9,6 +9,12 @@ import com.example.sellseeds.model.shop.entities.ShopDbEntity
 
 @Dao
 interface PlantDao {
+
+
+
+
+    @Query("Select * from plant  where shop_id =:shopId LIMIT  :limit OFFSET :offset")
+    suspend fun getPlantByShopIdPaging( shopId:Int ,limit:Int ,offset:Int) :List<PlantDbEntity>?
     @Query("Select * from plant")
     suspend fun getAllPlants():List<PlantDbEntity?>?
 
@@ -30,6 +36,7 @@ interface PlantDao {
     suspend  fun getPlantsByShopId_incr(shopId:Int):List<PlantDbEntity>?
     @Query("SELECT plant.* FROM plant WHERE shop_id = :shopId ORDER BY name DESC ")
     suspend  fun getPlantsByShopId_decr(shopId:Int):List<PlantDbEntity>?
+
 
 
 

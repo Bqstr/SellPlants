@@ -15,6 +15,7 @@ import com.example.sellseeds.model.shop.ShopRepositoryRealization
 import com.example.sellseeds.model.shop.entities.ShopIdRealization
 import com.example.sellseeds.model.user.RoomUserRepository
 import com.example.sellseeds.model.user.UserRepository
+import kotlinx.coroutines.Dispatchers
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -54,7 +55,7 @@ object Repositories {
         ShopRepositoryRealization(database1.getShopDao() , shopCurrentId = shopCurrentId)
     }
     val plantsRepository:PlantsRepository by lazy{
-        PlantRepositoryRealization(database1.getPlantDao() , userCurrentId = userCurrentId, shopDao =  database1.getShopDao())
+        PlantRepositoryRealization(database1.getPlantDao() , userCurrentId = userCurrentId, shopDao =  database1.getShopDao() , ioDsipatcher = Dispatchers.IO)
     }
     val ordersRepository:OrdersRepository by lazy{
         OrdersRepositoryRealization(database1.getOrdersDao() ,

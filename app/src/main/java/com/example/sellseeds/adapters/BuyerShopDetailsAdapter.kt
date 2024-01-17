@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.sellseeds.dataClass_enum.Converter
@@ -35,14 +37,15 @@ class BuyerShopDetailsAdapter(
     val ordersRepository: OrdersRepository,
     val currentUser_Id:UserCurrentId,
     val userRepository: UserRepository
-): RecyclerView.Adapter<BuyerShopDetailsAdapter.BuyerShopDetailsViewHolder>(){
-    val builder  = AlertDialog.Builder(context)
-    var plants = mutableListOf<Seed>()
-        set(newValue) {
-            field = newValue
-            notifyDataSetChanged()
-
-        }
+):PagingDataAdapter<Seed , BuyerShopDetailsAdapter.BuyerShopDetailsViewHolder>(DiffUtilOdin())
+//RecyclerView.Adapter<BuyerShopDetailsAdapter.BuyerShopDetailsViewHolder>(){
+{ val builder  = AlertDialog.Builder(context)
+//    var plants = mutableListOf<Seed>()
+//        set(newValue) {
+//            field = newValue
+//            notifyDataSetChanged()
+//
+//        }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BuyerShopDetailsViewHolder {
@@ -52,7 +55,9 @@ class BuyerShopDetailsAdapter(
     }
 
     override fun onBindViewHolder(holder: BuyerShopDetailsViewHolder, position: Int) {
-        val plant =plants[position]
+
+        val plant =getItem(position)!!
+
 
 
 
@@ -176,6 +181,9 @@ class BuyerShopDetailsAdapter(
         }
     }
 
-    override fun getItemCount(): Int =plants.size
+
+
+
+
     class BuyerShopDetailsViewHolder(val binding:BuyerShopItemsBinding ):RecyclerView.ViewHolder(binding.root)
 }

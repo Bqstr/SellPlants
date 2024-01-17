@@ -12,9 +12,11 @@ import com.example.sellseeds.model.shop.ShopDao
 import com.example.sellseeds.model.shop.entities.ShopDbEntity
 import com.example.sellseeds.model.user.UserCurrentId
 import com.example.sellseeds.model.user.UserDao
+import org.jetbrains.annotations.Async
 
 class OrdersRepositoryRealization(val ordersDao: OrdersDao ,val plantsDao: PlantDao ,val userCurrentId: UserCurrentId ,val shopCurrentId: ShopCurrentId ,val userDao: UserDao ,val shopDao: ShopDao):OrdersRepository {
     override suspend fun getAllOrders(): List<Orders>? {
+        
         return ordersDao.getAllOrders()?.map { OrderDbEntity -> OrderDbEntity.toOrder() }
     }
 

@@ -93,11 +93,9 @@ var isProductPressed =true
 
             }
         if(arguments!=null){
-            Log.d("111111111111111111","not null  ")
 
             if(arguments?.getSerializable(ADD_PRODUCT_KEY)!=null){
                 val product =arguments?.getSerializable(ADD_PRODUCT_KEY) as Seed
-                Log.d("111111111111111111",product.name)
                 viewModel.addProduct(product)
             }
             Log.d("111111111111111111",(arguments?.getSerializable(BACK_FROM_ORDER) as ActionOrder).orderId.toString())
@@ -123,7 +121,6 @@ var isProductPressed =true
         }
 
         viewModel.orderList.observe(viewLifecycleOwner){
-            Log.d("11123s",it.toString())
             orderAdapter.orders =it
             orderAdapter.notifyDataSetChanged()
         }
